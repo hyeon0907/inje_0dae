@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preload" href="./character-face.png" as="image">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet"><style>
+*{box-sizing:border-box}
+body{margin:0;background:#FBF2EC;font-family:'Gowun Dodum',system-ui,sans-serif;color:#3B2B27;-webkit-font-smoothing:antialiased}
+a{color:#9B2226;text-decoration:none}a:hover{color:#6E1618}
+input,textarea,button{font-family:inherit;color:inherit}
+input,textarea{width:100%;min-width:0;max-width:100%}
+input:focus,textarea:focus{outline:none;border-color:#9B2226}
+::placeholder{color:#C0AAA3}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes pop{0%{transform:scale(.9);opacity:0}100%{transform:scale(1);opacity:1}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes postLetter{0%{transform:translateY(-10px) scale(1);opacity:1}65%{transform:translateY(72px) scale(.72);opacity:1}100%{transform:translateY(92px) scale(.45);opacity:0}}
+@keyframes mailboxBounce{0%,100%{transform:translateY(0)}70%{transform:translateY(5px)}}
+@keyframes fireworkPop{0%{transform:scale(.05);opacity:0}12%{opacity:1}45%{transform:scale(1);opacity:1}75%,100%{transform:scale(1.25);opacity:0}}
+@keyframes confettiFall{0%{transform:translateY(-12vh) rotate(0);opacity:0}10%{opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
+@keyframes celebrateIn{0%{transform:translate(-50%,-24px) scale(.85);opacity:0}18%,78%{transform:translate(-50%,0) scale(1);opacity:1}100%{transform:translate(-50%,-12px) scale(.95);opacity:0}}
+.celebration{position:fixed;inset:0;z-index:700;pointer-events:none;overflow:hidden}
+.celebrate-banner{position:absolute;left:50%;top:76px;transform:translateX(-50%);width:max-content;max-width:calc(100% - 32px);padding:13px 22px;background:#FFF9F6;border:3px solid #9B2226;border-radius:999px;box-shadow:0 5px 0 rgba(124,27,30,.18);font-family:Jua;font-size:20px;color:#9B2226;text-align:center;animation:celebrateIn 5.2s ease both}
+.firework{position:absolute;width:10px;height:10px;border-radius:50%;animation:fireworkPop 2.2s ease-out both}.firework.f1{left:18%;top:22%;background:#C0752F;box-shadow:0 -74px #C0752F,52px -52px #D79A9A,74px 0 #9B2226,52px 52px #E5A93D,0 74px #D79A9A,-52px 52px #9B2226,-74px 0 #E5A93D,-52px -52px #D79A9A}.firework.f2{right:17%;top:31%;background:#9B2226;box-shadow:0 -64px #9B2226,45px -45px #E5A93D,64px 0 #D79A9A,45px 45px #C0752F,0 64px #9B2226,-45px 45px #E5A93D,-64px 0 #D79A9A,-45px -45px #C0752F;animation-delay:.55s}.firework.f3{left:44%;top:48%;background:#E5A93D;box-shadow:0 -56px #E5A93D,40px -40px #9B2226,56px 0 #D79A9A,40px 40px #C0752F,0 56px #9B2226,-40px 40px #D79A9A,-56px 0 #E5A93D,-40px -40px #C0752F;animation-delay:1.1s}
+.confetti{position:absolute;top:-20px;width:11px;height:22px;border-radius:3px;animation:confettiFall 4.8s linear both}.confetti.c1{left:8%;background:#9B2226}.confetti.c2{left:27%;background:#E5A93D;animation-delay:.35s}.confetti.c3{left:51%;background:#D79A9A;animation-delay:.8s}.confetti.c4{left:72%;background:#2F7D5B;animation-delay:.2s}.confetti.c5{left:91%;background:#C0752F;animation-delay:1.05s}
+@media(prefers-reduced-motion:reduce){.firework,.confetti,.celebrate-banner{animation-duration:.01ms;animation-iteration-count:1}}
+.sending-letter{animation:postLetter 1.25s cubic-bezier(.5,0,.35,1) forwards}
+.sending-mailbox{animation:mailboxBounce 1.25s ease forwards}
+.story-card{position:relative;overflow:hidden;background:linear-gradient(160deg,#FFF8F2 0%,#FBE8E2 55%,#F6DDDC 100%);border:2px solid #7C1B1E;border-radius:24px;padding:30px 22px 25px;box-shadow:5px 6px 0 rgba(59,43,39,.14)}
+.story-card:before,.story-card:after{content:'✦';position:absolute;color:#C0752F;font-size:26px;transform:rotate(12deg)}.story-card:before{left:22px;top:25px}.story-card:after{right:22px;top:72px;font-size:19px}
+.story-dot{position:absolute;width:11px;height:11px;border-radius:50%;background:#D79A9A}.story-dot.one{left:38px;top:105px}.story-dot.two{right:43px;bottom:102px;background:#C0752F}
+.identity-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}
+.opening-scene{width:300px;height:165px;margin:4px auto 12px;position:relative;cursor:pointer;user-select:none}
+.opening-helper{position:absolute;z-index:8;left:2px;bottom:3px;width:105px;height:130px}.opening-helper .helper-head{position:absolute;z-index:10;left:8px;top:-12px;width:90px;height:90px}.opening-helper .helper-head img{display:block;width:100%;height:100%;object-fit:contain}.opening-helper .helper-eye,.opening-helper .helper-smile{display:none}.opening-helper .helper-body{position:absolute;left:5px;right:5px;bottom:0;height:68px;background:#B23A3E;border:3px solid #7C1B1E;border-radius:44px 44px 13px 13px}.opening-helper .helper-arm{position:absolute;z-index:9;right:-42px;top:68px;width:68px;height:16px;background:#F6DDDC;border:3px solid #7C1B1E;border-radius:12px;transform-origin:8px 8px;transform:rotate(-10deg);transition:transform .48s ease}.opening-scene.open .helper-arm{transform:rotate(-38deg)}
+.open-envelope{width:180px;height:140px;position:absolute;right:0;bottom:0;perspective:700px;filter:drop-shadow(0 6px 0 rgba(59,43,39,.13))}
+.open-envelope .paper{position:absolute;z-index:1;left:24px;right:24px;bottom:25px;height:100px;padding-top:14px;background:#FFFDF9;border:3px solid #D7A9A1;border-radius:7px;transition:transform .55s cubic-bezier(.3,.8,.25,1),z-index 0s .28s;display:flex;align-items:flex-start;justify-content:center;font-family:Jua;color:#9B2226;font-size:14px;line-height:1.2}
+.open-envelope .back{position:absolute;z-index:2;left:0;right:0;bottom:0;height:92px;background:#F6DDDC;border:3px solid #7C1B1E;border-radius:9px}
+.open-envelope .front{position:absolute;z-index:4;left:3px;right:3px;bottom:3px;height:86px;background:#EABFBA;clip-path:polygon(0 22%,50% 76%,100% 22%,100% 100%,0 100%);border-radius:0 0 6px 6px}
+.open-envelope .flap{position:absolute;z-index:5;left:3px;right:3px;bottom:44px;height:48px;background:#F6DDDC;clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform .48s ease,z-index 0s .25s}
+.opening-scene.open .open-envelope .flap{transform:rotateX(180deg);z-index:1;transition:transform .48s ease,z-index 0s}
+.opening-scene.open .open-envelope .paper{z-index:3;transform:translateY(-64px);transition:transform .55s cubic-bezier(.3,.8,.25,1),z-index 0s .15s}
+@media(max-width:520px){.identity-grid{grid-template-columns:1fr}.letter-card{padding:21px 16px 23px!important}}
+</style></helmet>
+
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#9B2226"/><rect x="30" y="38" width="40" height="28" rx="3" fill="#F6DDDC" stroke="#7C1B1E" stroke-width="2"/><path d="M30 40 L50 55 L70 40" fill="none" stroke="#7C1B1E" stroke-width="2"/></svg></template>
+
+<div style="min-height:100vh;background:#FBF2EC;background-image:linear-gradient(rgba(155,34,38,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(155,34,38,.055) 1px,transparent 1px);background-size:26px 26px;padding:0 18px 64px">
+
+<sc-if value="{{ isOpenToday }}" hint-placeholder-val="{{ false }}">
+  <div class="celebration" aria-hidden="true">
+    <div class="celebrate-banner">🎉 오늘은 편지를 여는 날이에요! 🎉</div>
+    <i class="firework f1"></i><i class="firework f2"></i><i class="firework f3"></i>
+    <i class="confetti c1"></i><i class="confetti c2"></i><i class="confetti c3"></i><i class="confetti c4"></i><i class="confetti c5"></i>
+  </div>
+</sc-if>
+
+<sc-if value="{{ noticeOpen }}" hint-placeholder-val="{{ true }}">
+  <div role="dialog" aria-modal="true" aria-labelledby="notice-title" style="position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(59,43,39,.48);backdrop-filter:blur(3px)">
+    <div style="width:100%;max-width:460px;background:#FFF9F6;border:2px solid #3B2B27;border-radius:20px;box-shadow:6px 7px 0 rgba(59,43,39,.18);padding:25px 22px 22px;animation:pop .25s ease both">
+      <div id="notice-title" style="font-family:Jua;font-size:21px;color:#9B2226;margin-bottom:12px">읽어주세요</div>
+      <div style="font-size:14px;line-height:1.9;color:#7C6560">
+        · 편지는 한 번 넣으면 <b>수정하거나 내용을 다시 확인할 수 없어요.</b><br>
+        · 편지는 중복으로 작성할 수 있지만 <b>이벤트 응모는 한 번만 가능해요.</b><br>
+        · <b>비공개 계정은 스토리에 공대 인스타를 태그한 화면을 캡처해 공대 인스타 DM으로 보내주세요.</b><br>
+        · 작성 후에는 편지를 썼는지 여부만 확인할 수 있어요.<br>
+        · 개봉일에는 앞의 캐릭터를 눌러 편지를 열고 닫을 수 있어요.<br>
+        · 비밀번호는 본인만 알고 있어야 해요. 잃어버리면 열 수 없어요.
+      </div>
+      <button type="button" onClick="{{ closeNotice }}" style="width:100%;margin-top:20px;padding:12px;background:#9B2226;color:#fff;border:2px solid #7C1B1E;border-radius:12px;font-family:Jua;font-size:16px;cursor:pointer;box-shadow:0 3px 0 #7C1B1E">확인했어요</button>
+    </div>
+  </div>
+</sc-if>
+
+<div style="max-width:1080px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:20px 2px 6px">
+  <div onClick="{{ goHome }}" style="display:flex;align-items:center;gap:9px;cursor:pointer">
+    <div style="width:26px;height:19px;background:#9B2226;border-radius:3px;position:relative;overflow:hidden">
+      <div style="position:absolute;left:-3px;top:-9px;width:19px;height:19px;background:#F6DDDC;transform:rotate(45deg);border-radius:2px"></div>
+    </div>
+    <div style="font-family:Jua;font-size:19px;color:#9B2226">미래의 나에게</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px">
+    <sc-if value="{{ demoMode }}" hint-placeholder-val="{{ false }}">
+      <div style="font-size:12px;color:#C0752F;background:#FBEEDF;border:1px solid #EAD0AE;border-radius:999px;padding:4px 11px">데모 모드</div>
+    </sc-if>
+    <div onClick="{{ goAdmin }}" style="font-size:13px;color:#B39A93;cursor:pointer">관리자</div>
+  </div>
+</div>
+
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<div style="max-width:560px;margin:0 auto;padding-top:18px;animation:pop .35s ease both">
+  <div style="background:#fff;border:2px solid #3B2B27;border-radius:22px;box-shadow:5px 6px 0 rgba(59,43,39,.13);padding:34px 26px 30px;text-align:center">
+    <div style="display:inline-block;animation:floaty 4s ease-in-out infinite">
+      <div style="width:132px;height:150px;margin:0 auto;position:relative">
+        <div style="position:absolute;left:20px;right:20px;top:0;height:16px;background:#9B2226;border-radius:9px 9px 0 0"></div>
+        <div style="position:absolute;left:6px;right:6px;top:14px;bottom:26px;background:#B23A3E;border:3px solid #7C1B1E;border-radius:14px"></div>
+        <div style="position:absolute;left:24px;right:24px;top:44px;height:12px;background:#3B2B27;border-radius:6px"></div>
+        <div style="position:absolute;left:30px;right:30px;top:74px;height:34px;background:#FDF7F3;border:3px solid #7C1B1E;border-radius:5px;overflow:hidden">
+          <div style="position:absolute;left:-4px;top:-16px;width:34px;height:34px;background:#F6DDDC;transform:rotate(45deg)"></div>
+        </div>
+        <div style="position:absolute;left:44px;right:44px;bottom:0;height:28px;background:#7C1B1E;border-radius:0 0 5px 5px"></div>
+      </div>
+    </div>
+    <div style="font-family:Jua;font-size:27px;color:#9B2226;margin:16px 0 8px;line-height:1.35">오늘의 마음을<br>편지에 담아 보내요</div>
+    <div style="font-size:15px;line-height:1.75;color:#7C6560">우체통에 넣은 편지는 <b style="color:#9B2226">{{ openDateText }}</b>에<br>다 함께 열립니다. 그날까지 아무도 못 봐요.</div>
+
+    <div style="margin:22px auto 0;display:inline-flex;align-items:center;gap:9px;background:#F6DDDC;border:2px dashed #D79A9A;border-radius:999px;padding:8px 18px">
+      <div style="width:8px;height:8px;border-radius:50%;background:#9B2226"></div>
+      <div style="font-family:Jua;font-size:15px;color:#9B2226">개봉까지 {{ dDayText }}</div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:11px;margin-top:26px">
+      <div onClick="{{ goWrite }}" style="padding:15px;background:#9B2226;color:#fff;border:2px solid #7C1B1E;border-radius:14px;font-family:Jua;font-size:18px;cursor:pointer;box-shadow:0 3px 0 #7C1B1E">편지 쓰기</div>
+      <div onClick="{{ goFind }}" style="padding:14px;background:#fff;color:#9B2226;border:2px solid #E0C4C0;border-radius:14px;font-family:Jua;font-size:16px;cursor:pointer">내 편지 찾아보기</div>
+    </div>
+  </div>
+
+</div>
+</sc-if>
+
+<sc-if value="{{ isWrite }}" hint-placeholder-val="{{ false }}">
+<div style="max-width:640px;margin:0 auto;padding-top:14px;animation:pop .3s ease both">
+  <div onClick="{{ goHome }}" style="font-size:14px;color:#9C837D;cursor:pointer;padding:6px 2px">← 돌아가기</div>
+  <div class="letter-card" style="background:#fff;border:2px solid #3B2B27;border-radius:20px;box-shadow:5px 6px 0 rgba(59,43,39,.13);padding:24px 22px 26px">
+    <div style="font-family:Jua;font-size:22px;color:#9B2226">편지 쓰기</div>
+    <div style="font-size:14px;color:#9C837D;margin-top:5px">천천히, 하고 싶은 말을 적어보세요</div>
+
+    <div style="margin-top:20px;display:flex;flex-direction:column;gap:7px">
+      <div style="font-size:13.5px;color:#7C6560">학번 <span style="color:#C0AAA3">(선택)</span></div>
+      <input value="{{ sid }}" onChange="{{ onSid }}" inputmode="numeric" placeholder="학번을 입력해주세요" style="padding:13px 14px;background:#FFFAF8;border:2px solid #E6D2CD;border-radius:12px;font-size:15px" />
+    </div>
+
+    <div class="identity-grid">
+      <div style="display:flex;flex-direction:column;gap:7px">
+        <div style="font-size:13.5px;color:#7C6560">이름 <span style="color:#9B2226">(필수)</span></div>
+        <input value="{{ name }}" onChange="{{ onName }}" placeholder="이름을 입력해주세요" style="padding:13px 14px;background:#FFFAF8;border:2px solid #E6D2CD;border-radius:12px;font-size:15px" />
+      </div>
+      <div style="display:flex;flex-direction:column;gap:7px">
+        <div style="font-size:13.5px;color:#7C6560">전화번호 <span style="color:#9B2226">(필수)</span></div>
+        <input value="{{ phone }}" onChange="{{ onPhone }}" inputmode="tel" placeholder="010-0000-0000" style="padding:13px 14px;background:#FFFAF8;border:2px solid #E6D2CD;border-radius:12px;font-size:15px" />
+      </div>
+    </div>
+
+    <div style="margin-top:16px;display:flex;flex-direction:column;gap:7px">
+      <div style="font-size:13.5px;color:#7C6560">인스타 아이디 <span style="color:#9B2226">(필수)</span></div>
+      <input value="{{ instagram }}" onChange="{{ onInstagram }}" placeholder="@ 없이 입력해주세요" autocapitalize="none" style="padding:13px 14px;background:#FFFAF8;border:2px solid #E6D2CD;border-radius:12px;font-size:15px" />
+    </div>
+
+    <div style="margin-top:16px;display:flex;flex-direction:column;gap:7px">
+      <div style="font-size:13.5px;color:#7C6560">편지 제목 <span style="color:#C0AAA3">(선택)</span></div>
+      <input value="{{ title }}" onChange="{{ onTitle }}" placeholder="6개월 뒤의 나에게" style="padding:13px 14px;background:#FFFAF8;border:2px solid #E6D2CD;border-radius:12px;font-size:15px" />
+    </div>
+
+    <div style="margin-top:16px;display:flex;flex-direction:column;gap:7px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline">
+        <div style="font-size:13.5px;color:#7C6560">편지 내용</div>
+        <div style="font-size:12.5px;color:#B39A93">{{ bodyLen }}자</div>
+      </div>
+      <textarea value="{{ body }}" onChange="{{ onBody }}" placeholder="지금 무슨 생각을 하고 있나요? 그때의 나에게 하고 싶은 말을 적어보세요." style="padding:16px;background:#FFFAF8;border:2px solid #E6D2CD;border-radius:12px;font-size:15px;line-height:2.05;min-height:250px;resize:vertical;font-family:'Gowun Batang',serif;background-image:linear-gradient(#F1E1DC 1px,transparent 1px);background-size:100% 30.75px;background-position:0 22px"></textarea>
+      <div style="font-size:12.5px;color:#9C837D">편지 내용은 최소 20자 이상 작성해주세요.</div>
+    </div>
+
+    <label style="display:flex;align-items:flex-start;gap:9px;margin-top:18px;padding:13px 14px;background:#FFF9F6;border:2px solid #EBD7D2;border-radius:12px;cursor:pointer">
+      <input type="checkbox" checked="{{ privacyAgreed }}" onChange="{{ onPrivacyAgreed }}" style="width:18px;height:18px;margin-top:1px;accent-color:#9B2226" />
+      <span style="font-size:13.5px;line-height:1.65;color:#7C6560"><b style="color:#9B2226">개인정보 수집·이용에 동의합니다.</b><br>이름, 전화번호, 학번, 인스타 아이디는 타임캡슐 편지 관리 및 이벤트 응모 확인 목적으로만 사용됩니다.</span>
+    </label>
+
+    <div style="margin-top:20px;padding-top:20px;border-top:2px dashed #EBD7D2">
+      <div style="font-family:Jua;font-size:17px;color:#9B2226">나만의 비밀번호</div>
+      <div style="font-size:13.5px;color:#9C837D;margin-top:5px;line-height:1.7">이 편지를 열 때 쓸 비밀번호예요. 꼭 기억해 주세요.</div>
+      <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+        <input value="{{ pw }}" onChange="{{ onPw }}" type="password" placeholder="비밀번호" style="flex:1;min-width:150px;padding:13px 14px;background:#FFFAF8;border:2px solid #E6D2CD;border-radius:12px;font-size:15px" />
+        <input value="{{ pw2 }}" onChange="{{ onPw2 }}" type="password" placeholder="한 번 더" style="flex:1;min-width:150px;padding:13px 14px;background:#FFFAF8;border:2px solid #E6D2CD;border-radius:12px;font-size:15px" />
+      </div>
+      <div style="margin-top:14px;display:flex;flex-direction:column;gap:7px">
+        <div style="font-size:13.5px;color:#7C6560">비밀번호 찾기 질문: 가장 친한 친구의 이름은? <span style="color:#9B2226">(필수)</span></div>
+        <input value="{{ recoveryAnswer }}" onChange="{{ onRecoveryAnswer }}" placeholder="답변을 입력해주세요" autocomplete="off" style="padding:13px 14px;background:#FFFAF8;border:2px solid #E6D2CD;border-radius:12px;font-size:15px" />
+      </div>
+    </div>
+
+    <sc-if value="{{ err }}" hint-placeholder-val="{{ false }}">
+      <div style="margin-top:14px;padding:11px 14px;background:#FCEDED;border:2px solid #EFC4C4;border-radius:12px;font-size:13.5px;color:#9B2226">{{ err }}</div>
+    </sc-if>
+
+    <div onClick="{{ submit }}" style="margin-top:20px;padding:15px;background:#9B2226;color:#fff;border:2px solid #7C1B1E;border-radius:14px;font-family:Jua;font-size:18px;text-align:center;cursor:pointer;box-shadow:0 3px 0 #7C1B1E">{{ submitLabel }}</div>
+    <div style="margin-top:10px;font-size:12.5px;color:#9B2226;text-align:center;line-height:1.6">편지를 보내면 수정하거나 내용을 다시 확인할 수 없어요.</div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isSending }}" hint-placeholder-val="{{ false }}">
+<div style="max-width:520px;margin:0 auto;padding-top:54px;animation:pop .25s ease both">
+  <div style="background:#fff;border:2px solid #3B2B27;border-radius:22px;box-shadow:5px 6px 0 rgba(59,43,39,.13);padding:40px 26px 34px;text-align:center;overflow:hidden">
+    <div style="height:210px;position:relative;margin:0 auto;width:180px">
+      <div class="sending-letter" style="position:absolute;z-index:2;left:55px;top:2px;width:70px;height:48px;background:#FFF9F6;border:3px solid #7C1B1E;border-radius:6px;box-shadow:0 3px 0 rgba(59,43,39,.12)">
+        <div style="position:absolute;left:8px;right:8px;top:5px;height:30px;border-bottom:2px solid #D79A9A;transform:rotate(35deg)"></div>
+      </div>
+      <div class="sending-mailbox" style="position:absolute;left:24px;right:24px;bottom:0;height:132px">
+        <div style="position:absolute;left:18px;right:18px;top:0;height:16px;background:#9B2226;border-radius:9px 9px 0 0"></div>
+        <div style="position:absolute;left:5px;right:5px;top:14px;bottom:17px;background:#B23A3E;border:3px solid #7C1B1E;border-radius:14px"></div>
+        <div style="position:absolute;left:26px;right:26px;top:42px;height:12px;background:#3B2B27;border-radius:6px"></div>
+        <div style="position:absolute;left:48px;right:48px;bottom:0;height:24px;background:#7C1B1E;border-radius:0 0 5px 5px"></div>
+      </div>
+    </div>
+    <div style="font-family:Jua;font-size:24px;color:#9B2226;margin-top:14px">편지를 우체통에 넣고 있어요</div>
+    <div style="font-size:14px;color:#9C837D;margin-top:7px">소중하게 봉인할게요.</div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isSent }}" hint-placeholder-val="{{ false }}">
+<div style="max-width:520px;margin:0 auto;padding-top:26px;animation:pop .4s ease both">
+  <div class="story-card" style="text-align:center">
+    <div class="story-dot one"></div><div class="story-dot two"></div>
+    <div style="display:inline-block;background:#9B2226;color:#fff;border-radius:999px;padding:6px 14px;font-size:12.5px;letter-spacing:.04em">LETTER TO MY FUTURE SELF</div>
+    <div style="width:150px;height:104px;margin:0 auto;position:relative;animation:floaty 4s ease-in-out infinite">
+      <div style="position:absolute;inset:0;background:#F6DDDC;border:3px solid #7C1B1E;border-radius:9px"></div>
+      <div style="position:absolute;left:0;right:0;top:0;height:70px;overflow:hidden"><div style="position:absolute;left:11px;top:-52px;width:124px;height:124px;background:#fff;border:3px solid #7C1B1E;transform:rotate(45deg);border-radius:6px"></div></div>
+      <div style="position:absolute;left:50%;top:44px;margin-left:-19px;width:38px;height:38px;border-radius:50%;background:#9B2226;border:3px solid #7C1B1E"></div>
+    </div>
+    <div style="font-family:Jua;font-size:27px;color:#9B2226;margin:22px 0 8px">미래의 나에게<br>편지를 보냈어요! 💌</div>
+    <sc-if value="{{ isOpenToday }}" hint-placeholder-val="{{ false }}">
+      <div style="font-size:15px;line-height:1.85;color:#7C6560">오늘은 바로 편지를 여는 날이에요!<br>캐릭터가 소중한 편지를 곧 열어줄게요 🎉</div>
+    </sc-if>
+    <sc-if value="{{ isNotOpenToday }}" hint-placeholder-val="{{ true }}">
+      <div style="font-size:15px;line-height:1.85;color:#7C6560"><b style="color:#9B2226">{{ openDateText }}</b>에 다시 만나요.<br>우리의 약속까지 <b style="color:#9B2226">{{ dDayText }}</b></div>
+    </sc-if>
+    <div style="margin-top:18px;background:rgba(255,255,255,.72);border:2px dashed #D7A96F;border-radius:16px;padding:13px 15px;font-size:13.5px;line-height:1.7;color:#7C6560">
+      ✓ 편지 작성 완료 · 안전하게 봉인했어요<br><b style="color:#9B2226">{{ instagramDisplay }}</b>
+    </div>
+    <div style="margin-top:12px;font-size:12.5px;color:#9C837D">이 카드를 캡처해서 인스타그램 스토리에 올려주세요 ✨</div>
+    <div onClick="{{ saveStoryCard }}" style="margin-top:22px;padding:15px;background:#9B2226;color:#fff;border:2px solid #7C1B1E;border-radius:14px;font-family:Jua;font-size:17px;cursor:pointer;box-shadow:0 3px 0 #7C1B1E">{{ storySaveLabel }}</div>
+    <div onClick="{{ goHome }}" style="margin-top:11px;padding:13px;background:rgba(255,255,255,.7);color:#9B2226;border:2px solid #E0C4C0;border-radius:14px;font-family:Jua;font-size:15px;cursor:pointer">홈으로</div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isFind }}" hint-placeholder-val="{{ false }}">
+<div style="max-width:480px;margin:0 auto;padding-top:14px;animation:pop .3s ease both">
+  <div onClick="{{ goHome }}" style="font-size:14px;color:#9C837D;cursor:pointer;padding:6px 2px">← 돌아가기</div>
+  <div style="background:#fff;border:2px solid #3B2B27;border-radius:20px;box-shadow:5px 6px 0 rgba(59,43,39,.13);padding:30px 24px 26px">
+    <div style="font-family:Jua;font-size:22px;color:#9B2226;text-align:center">내 편지 찾기</div>
+    <div style="font-size:14px;color:#9C837D;margin-top:6px;text-align:center;line-height:1.7">학번과 비밀번호를 넣어주세요</div>
+    <div style="display:flex;flex-direction:column;gap:11px;margin-top:22px">
+      <input value="{{ sid }}" onChange="{{ onSid }}" placeholder="학번 또는 아이디" style="padding:14px;background:#FFFAF8;border:2px solid #E6D2CD;border-radius:12px;font-size:15px" />
+      <input value="{{ pw }}" onChange="{{ onPw }}" type="password" placeholder="비밀번호" style="padding:14px;background:#FFFAF8;border:2px solid #E6D2CD;border-radius:12px;font-size:15px" />
+    </div>
+    <sc-if value="{{ err }}" hint-placeholder-val="{{ false }}">
+      <div style="margin-top:14px;padding:11px 14px;background:#FCEDED;border:2px solid #EFC4C4;border-radius:12px;font-size:13.5px;color:#9B2226">{{ err }}</div>
+    </sc-if>
+    <div onClick="{{ doFind }}" style="margin-top:18px;padding:15px;background:#9B2226;color:#fff;border:2px solid #7C1B1E;border-radius:14px;font-family:Jua;font-size:17px;text-align:center;cursor:pointer;box-shadow:0 3px 0 #7C1B1E">{{ findLabel }}</div>
+    <div onClick="{{ toggleRecovery }}" style="margin-top:14px;font-size:14px;color:#9B2226;text-align:center;cursor:pointer;text-decoration:underline">비밀번호를 잊으셨나요?</div>
+    <sc-if value="{{ recoveryOpen }}" hint-placeholder-val="{{ false }}">
+      <div style="margin-top:16px;padding:16px;background:#FFF9F6;border:2px solid #EBD7D2;border-radius:12px">
+        <div style="font-family:Jua;font-size:16px;color:#9B2226">비밀번호 다시 설정</div>
+        <div style="font-size:13px;color:#9C837D;margin:5px 0 10px">위 학번과 아래 답변을 확인한 뒤 새 비밀번호를 설정해요.</div>
+        <input value="{{ recoveryAnswer }}" onChange="{{ onRecoveryAnswer }}" placeholder="가장 친한 친구의 이름은?" autocomplete="off" style="padding:12px;background:#fff;border:2px solid #E6D2CD;border-radius:11px;font-size:14px" />
+        <input value="{{ newPw }}" onChange="{{ onNewPw }}" type="password" placeholder="새 비밀번호 (4자 이상)" style="margin-top:9px;padding:12px;background:#fff;border:2px solid #E6D2CD;border-radius:11px;font-size:14px" />
+        <div onClick="{{ resetPassword }}" style="margin-top:10px;padding:12px;background:#3B2B27;color:#fff;border-radius:11px;font-family:Jua;text-align:center;cursor:pointer">비밀번호 변경</div>
+        <sc-if value="{{ recoveryMsg }}" hint-placeholder-val="{{ false }}"><div style="margin-top:9px;font-size:13px;color:#2F7D5B">{{ recoveryMsg }}</div></sc-if>
+      </div>
+    </sc-if>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isLetterList }}" hint-placeholder-val="{{ false }}">
+<div style="max-width:560px;margin:0 auto;padding-top:14px;animation:pop .3s ease both">
+  <div onClick="{{ goHome }}" style="font-size:14px;color:#9C837D;cursor:pointer;padding:6px 2px">← 돌아가기</div>
+  <div style="background:#fff;border:2px solid #3B2B27;border-radius:20px;box-shadow:5px 6px 0 rgba(59,43,39,.13);padding:26px 22px">
+    <div style="font-family:Jua;font-size:23px;color:#9B2226">내가 보낸 편지</div>
+    <div style="font-size:14px;color:#9C837D;margin-top:5px">총 {{ foundCount }}장의 편지를 찾았어요.</div>
+    <div style="display:flex;flex-direction:column;gap:11px;margin-top:20px">
+      <sc-for list="{{ foundRows }}" as="letter" hint-placeholder-count="2">
+        <div onClick="{{ letter.open }}" style="display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px;background:#FFF9F6;border:2px solid #EBD7D2;border-radius:14px;cursor:{{ letter.cursor }}">
+          <div><div style="font-family:Jua;font-size:17px;color:#3B2B27">{{ letter.label }}</div><div style="font-size:12.5px;color:#9C837D;margin-top:4px">{{ letter.dateText }}</div></div>
+          <div style="font-size:13px;color:{{ letter.color }};white-space:nowrap">{{ letter.actionText }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isLetter }}" hint-placeholder-val="{{ false }}">
+<div style="max-width:640px;margin:0 auto;padding-top:14px;animation:pop .3s ease both">
+  <div onClick="{{ backFromLetter }}" style="font-size:14px;color:#9C837D;cursor:pointer;padding:6px 2px">← 돌아가기</div>
+
+  <sc-if value="{{ letterLocked }}" hint-placeholder-val="{{ false }}">
+  <div style="background:#fff;border:2px solid #3B2B27;border-radius:22px;box-shadow:5px 6px 0 rgba(59,43,39,.13);padding:38px 26px 32px;text-align:center">
+    <div style="width:76px;height:88px;margin:0 auto;position:relative">
+      <div style="position:absolute;left:16px;right:16px;top:0;height:44px;border:6px solid #C99B9B;border-bottom:none;border-radius:22px 22px 0 0"></div>
+      <div style="position:absolute;left:0;right:0;bottom:0;height:56px;background:#9B2226;border:3px solid #7C1B1E;border-radius:10px"></div>
+      <div style="position:absolute;left:50%;bottom:22px;margin-left:-6px;width:12px;height:14px;background:#F6DDDC;border-radius:3px"></div>
+    </div>
+    <div style="font-family:Jua;font-size:23px;color:#9B2226;margin:20px 0 10px">편지를 작성했어요</div>
+    <div style="font-size:15px;line-height:1.85;color:#7C6560">작성 여부만 확인할 수 있으며 내용은 봉인되어 있어요.<br><b style="color:#9B2226">{{ openDateText }}</b>에 캐릭터가 편지를 열어줄게요.</div>
+    <div style="margin:22px auto 0;display:inline-block;background:#F6DDDC;border:2px dashed #D79A9A;border-radius:999px;padding:9px 22px;font-family:Jua;font-size:17px;color:#9B2226">{{ dDayText }}</div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ letterOpen }}" hint-placeholder-val="{{ false }}">
+  <div style="background:#fff;border:2px solid #3B2B27;border-radius:20px;box-shadow:5px 6px 0 rgba(59,43,39,.13);padding:26px 24px 26px">
+    <div class="opening-scene {{ characterOpenClass }}" onClick="{{ toggleLetter }}" role="button" tabindex="0" aria-label="캐릭터가 편지 봉투 열고 닫기">
+      <div class="opening-helper"><div class="helper-head"><img src="./character-face.png" alt="편지를 열어주는 캐릭터" loading="eager" decoding="sync" /></div><div class="helper-eye e1"></div><div class="helper-eye e2"></div><div class="helper-smile"></div><div class="helper-body"></div><div class="helper-arm"></div></div>
+      <div class="open-envelope"><div class="paper">미래의 나에게</div><div class="back"></div><div class="flap"></div><div class="front"></div></div>
+    </div>
+    <div style="font-family:Jua;font-size:16px;color:#9B2226;text-align:center;margin-bottom:18px">봉투를 눌러 편지를 {{ toggleText }}</div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap">
+      <div>
+        <div style="font-family:Jua;font-size:22px;color:#9B2226">{{ cur.title }}</div>
+        <div style="font-size:13px;color:#B39A93;margin-top:5px">{{ cur.dateText }} · {{ cur.sid }}</div>
+      </div>
+      <div style="font-size:12.5px;color:#fff;background:{{ badgeColor }};border-radius:999px;padding:6px 13px;white-space:nowrap">{{ badgeText }}</div>
+    </div>
+
+    <sc-if value="{{ reading }}" hint-placeholder-val="{{ true }}">
+      <div style="margin-top:18px;padding:22px 20px;background:#FFFAF8;border:2px dashed #EBD7D2;border-radius:14px;font-family:'Gowun Batang',serif;font-size:15.5px;line-height:2.15;white-space:pre-wrap;color:#3B2B27">{{ cur.body }}</div>
+    </sc-if>
+  </div>
+  </sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isAdminLogin }}" hint-placeholder-val="{{ false }}">
+<div style="max-width:460px;margin:0 auto;padding-top:26px;animation:pop .3s ease both">
+  <div onClick="{{ goHome }}" style="font-size:14px;color:#9C837D;cursor:pointer;padding:6px 2px">← 돌아가기</div>
+  <div style="background:#fff;border:2px solid #3B2B27;border-radius:20px;box-shadow:5px 6px 0 rgba(59,43,39,.13);padding:30px 24px">
+    <div style="font-family:Jua;font-size:20px;color:#9B2226;text-align:center">관리자 로그인</div>
+    <input value="{{ adminPw }}" onChange="{{ onAdminPw }}" type="password" placeholder="관리자 비밀번호" style="width:100%;margin-top:18px;padding:14px;background:#FFFAF8;border:2px solid #E6D2CD;border-radius:12px;font-size:15px" />
+    <sc-if value="{{ err }}" hint-placeholder-val="{{ false }}">
+      <div style="margin-top:12px;font-size:13.5px;color:#9B2226;text-align:center">{{ err }}</div>
+    </sc-if>
+    <div onClick="{{ doAdminLogin }}" style="margin-top:16px;padding:14px;background:#9B2226;color:#fff;border:2px solid #7C1B1E;border-radius:12px;font-family:Jua;font-size:16px;text-align:center;cursor:pointer">{{ loginLabel }}</div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ false }}">
+<div style="max-width:1080px;margin:0 auto;padding-top:14px;animation:pop .3s ease both">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding:6px 2px 14px">
+    <div style="font-family:Jua;font-size:22px;color:#9B2226">관리자 대시보드</div>
+    <div style="display:flex;gap:8px">
+      <div onClick="{{ refresh }}" style="padding:10px 16px;background:#fff;border:2px solid #E6D2CD;border-radius:11px;font-size:14px;color:#7C6560;cursor:pointer">새로고침</div>
+      <div onClick="{{ exportCsv }}" style="padding:10px 16px;background:#fff;border:2px solid #E0C4C0;border-radius:11px;font-size:14px;color:#9B2226;cursor:pointer">CSV 내보내기</div>
+      <div onClick="{{ logout }}" style="padding:10px 16px;background:#fff;border:2px solid #E6D2CD;border-radius:11px;font-size:14px;color:#7C6560;cursor:pointer">로그아웃</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px">
+    <div style="background:#fff;border:2px solid #EBD7D2;border-radius:16px;padding:18px"><div style="font-size:13px;color:#9C837D">전체 편지</div><div style="font-family:Jua;font-size:26px;color:#9B2226;margin-top:4px">{{ stats.total }}</div></div>
+    <div style="background:#fff;border:2px solid #EBD7D2;border-radius:16px;padding:18px"><div style="font-size:13px;color:#9C837D">작성자 수</div><div style="font-family:Jua;font-size:26px;color:#9B2226;margin-top:4px">{{ stats.users }}</div></div>
+    <div style="background:#fff;border:2px solid #EBD7D2;border-radius:16px;padding:18px"><div style="font-size:13px;color:#9C837D">작성 완료</div><div style="font-family:Jua;font-size:26px;color:#2F7D5B;margin-top:4px">{{ stats.total }}</div></div>
+    <div style="background:#fff;border:2px solid #EBD7D2;border-radius:16px;padding:18px"><div style="font-size:13px;color:#9C837D">개봉까지</div><div style="font-family:Jua;font-size:26px;color:#9B2226;margin-top:4px">{{ dDayText }}</div></div>
+  </div>
+
+  <div style="background:#fff;border:2px solid #EBD7D2;border-radius:16px;padding:18px 20px;margin-top:12px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+    <div style="font-family:Jua;font-size:16px;color:#3B2B27">공통 개봉일</div>
+    <input value="{{ openDateInput }}" onChange="{{ onOpenDate }}" type="date" style="padding:10px 12px;background:#FFFAF8;border:2px solid #E6D2CD;border-radius:11px;font-size:14px" />
+    <div onClick="{{ saveOpenDate }}" style="padding:10px 18px;background:#9B2226;color:#fff;border:2px solid #7C1B1E;border-radius:11px;font-size:14px;cursor:pointer">변경</div>
+    <div style="font-size:13px;color:#9C837D">{{ adminMsg }}</div>
+  </div>
+
+  <div style="background:#fff;border:2px solid #EBD7D2;border-radius:16px;padding:18px 20px;margin-top:12px">
+    <div style="font-family:Jua;font-size:16px;color:#3B2B27">관리자 비밀번호 변경</div>
+    <div style="font-size:13px;color:#9C837D;margin-top:5px">새 비밀번호는 8자 이상으로 입력해주세요.</div>
+    <div style="display:flex;align-items:center;gap:9px;margin-top:12px;flex-wrap:wrap">
+      <input value="{{ newAdminPw }}" onChange="{{ onNewAdminPw }}" type="password" placeholder="새 비밀번호" style="flex:1;min-width:180px;padding:10px 12px;background:#FFFAF8;border:2px solid #E6D2CD;border-radius:11px;font-size:14px" />
+      <input value="{{ confirmAdminPw }}" onChange="{{ onConfirmAdminPw }}" type="password" placeholder="새 비밀번호 확인" style="flex:1;min-width:180px;padding:10px 12px;background:#FFFAF8;border:2px solid #E6D2CD;border-radius:11px;font-size:14px" />
+      <div onClick="{{ changeAdminPw }}" style="padding:10px 18px;background:#3B2B27;color:#fff;border:2px solid #2A1E1B;border-radius:11px;font-size:14px;cursor:pointer">비밀번호 변경</div>
+    </div>
+    <div style="font-size:13px;color:#9C837D;margin-top:9px">{{ pwChangeMsg }}</div>
+  </div>
+
+  <div style="background:#fff;border:2px solid #EBD7D2;border-radius:16px;padding:18px 20px;margin-top:12px">
+    <div style="font-family:Jua;font-size:16px;color:#3B2B27">서버 연결 관리</div>
+    <div style="font-size:13px;line-height:1.75;color:#9C837D;margin-top:5px">모든 사용자는 기본 서버에 자동 연결됩니다. 관리자만 주소를 변경하거나 기본값으로 복원할 수 있습니다.</div>
+    <input value="{{ apiInput }}" onChange="{{ onApiInput }}" placeholder="https://timecapsule-api.inje-timecapsule.workers.dev" style="width:100%;margin-top:12px;padding:12px 13px;background:#FFFAF8;border:2px solid #E6D2CD;border-radius:11px;font-size:13px" />
+    <div style="display:flex;gap:9px;margin-top:11px">
+      <div onClick="{{ saveApi }}" style="flex:2;padding:12px;background:#3B2B27;color:#fff;border-radius:11px;font-size:14px;text-align:center;cursor:pointer">연결 저장</div>
+      <div onClick="{{ clearApi }}" style="flex:1;padding:12px;background:#fff;border:2px solid #E6D2CD;border-radius:11px;font-size:14px;color:#7C6560;text-align:center;cursor:pointer">기본 주소 복원</div>
+    </div>
+    <sc-if value="{{ apiMsg }}" hint-placeholder-val="{{ false }}">
+      <div style="margin-top:10px;font-size:13px;color:#7C6560">{{ apiMsg }}</div>
+    </sc-if>
+  </div>
+
+  <div style="background:#fff;border:2px solid #EBD7D2;border-radius:16px;margin-top:12px;overflow:hidden">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:2px solid #F3E6E2;flex-wrap:wrap;gap:10px">
+      <div style="font-family:Jua;font-size:17px;color:#3B2B27">사용자 목록</div>
+      <input value="{{ q }}" onChange="{{ onQ }}" placeholder="학번 검색" style="padding:9px 13px;background:#FFFAF8;border:2px solid #E6D2CD;border-radius:11px;font-size:14px;width:180px" />
+    </div>
+    <div style="overflow-x:auto">
+    <div style="min-width:1060px">
+    <div style="display:grid;grid-template-columns:0.9fr 1.15fr 0.8fr 1.1fr 1.6fr 0.9fr 0.8fr 0.7fr;gap:12px;padding:12px 20px;background:#FDF6F3;font-size:12.5px;color:#9C837D;border-bottom:2px solid #F3E6E2;white-space:nowrap">
+      <div>이름</div><div>전화번호</div><div>학번</div><div>인스타 아이디</div><div>제목</div><div>작성일</div><div>상태</div><div style="text-align:right">관리</div>
+    </div>
+    <sc-for list="{{ rows }}" as="row" hint-placeholder-count="4">
+      <div style="display:grid;grid-template-columns:0.9fr 1.15fr 0.8fr 1.1fr 1.6fr 0.9fr 0.8fr 0.7fr;gap:12px;padding:12px 20px;border-bottom:1px solid #F6ECE9;font-size:13.5px;align-items:center">
+        <div style="color:#3B2B27;white-space:nowrap">{{ row.name }}</div>
+        <div style="color:#3B2B27;white-space:nowrap">{{ row.phone }}</div>
+        <div style="color:#3B2B27;white-space:nowrap">{{ row.sid }}</div>
+        <div style="color:#3B2B27;white-space:nowrap">@{{ row.instagram }}</div>
+        <div onClick="{{ row.open }}" style="color:#9B2226;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ row.title }}</div>
+        <div style="color:#9C837D;white-space:nowrap">{{ row.dateText }}</div>
+        <div style="color:{{ row.stateColor }};white-space:nowrap">{{ row.stateText }}</div>
+        <div style="display:flex;justify-content:flex-end"><span onClick="{{ row.del }}" style="cursor:pointer;color:#B39A93;font-size:13px;border:1px solid #EBD7D2;border-radius:9px;padding:0 14px;height:44px;display:inline-flex;align-items:center;white-space:nowrap">삭제</span></div>
+      </div>
+    </sc-for>
+    </div>
+    </div>
+    <sc-if value="{{ noRows }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:34px;text-align:center;font-size:14px;color:#B39A93">아직 편지가 없어요</div>
+    </sc-if>
+  </div>
+
+  <sc-if value="{{ adminReading }}" hint-placeholder-val="{{ false }}">
+  <div style="background:#fff;border:2px solid #3B2B27;border-radius:18px;padding:22px 24px;margin-top:12px">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px">
+      <div style="font-family:Jua;font-size:19px;color:#9B2226">{{ cur.title }}</div>
+      <div onClick="{{ closeAdminRead }}" style="font-size:14px;color:#B39A93;cursor:pointer">닫기</div>
+    </div>
+    <div style="font-size:13px;color:#B39A93;margin-top:4px">{{ cur.sid }} · {{ cur.dateText }}</div>
+    <div style="margin-top:14px;padding:20px;background:#FFFAF8;border:2px dashed #EBD7D2;border-radius:14px;font-family:'Gowun Batang',serif;font-size:15px;line-height:2.1;white-space:nowrap;overflow-x:auto">{{ cur.body }}</div>
+  </div>
+  </sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ loading }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;left:0;right:0;bottom:22px;display:flex;justify-content:center;pointer-events:none">
+    <div style="display:flex;align-items:center;gap:9px;background:#3B2B27;color:#fff;border-radius:999px;padding:10px 18px;font-size:13.5px">
+      <div style="width:13px;height:13px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite"></div>
+      보내는 중…
+    </div>
+  </div>
+</sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;editDays&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:7,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:1,&quot;max&quot;:30,&quot;unit&quot;:&quot;일&quot;,&quot;section&quot;:&quot;규칙&quot;}}">
+const API_KEY = 'timecapsule_api_url';
+const DEFAULT_API_URL = 'https://timecapsule-api.inje-timecapsule.workers.dev';
+const DEMO_KEY = 'timecapsule_demo_v2';
+const CONFIG_CACHE_KEY = 'timecapsule_config_cache_v1';
+const DAY = 86400000;
+
+class Component extends DCLogic {
+  state = {
+    screen: 'home', sid: '', name: '', phone: '', instagram: '', recoveryAnswer: '', newPw: '', recoveryOpen: false, recoveryMsg: '', pw: '', pw2: '', title: '', body: '', privacyAgreed: false,
+    err: '', adminPw: '', newAdminPw: '', confirmAdminPw: '', adminMsg: '', pwChangeMsg: '', q: '', openDateInput: '',
+    api: '', apiInput: '', apiMsg: '', loading: false,
+    config: null, cur: null, letters: [], foundLetters: [], adminReadId: null,
+    letterRevealed: false, storySaved: false, noticeOpen: true, now: Date.now()
+  };
+
+  componentDidMount() {
+    const api = localStorage.getItem(API_KEY) || DEFAULT_API_URL;
+    let cached = null;
+    try { cached = JSON.parse(localStorage.getItem(CONFIG_CACHE_KEY)); } catch (e) {}
+    const usable = cached && cached.openDate && cached.stats ? cached : null;
+    this.setState({ api, apiInput: api, config: usable, openDateInput: usable ? usable.openDate : '' });
+    this.loadConfig(api);
+    this.timer = setInterval(() => this.setState({ now: Date.now() }), 30000);
+  }
+  componentWillUnmount() { clearInterval(this.timer); }
+
+  /* ---------- 서버 호출 (URL 미설정 시 로컬 데모) ---------- */
+
+  async call(action, payload, api) {
+    const url = api !== undefined ? api : this.state.api;
+    if (!url) return this.demo(action, payload);
+    const res = await fetch(url, { method: 'POST', body: JSON.stringify({ action, ...payload }) });
+    const out = await res.json();
+    if (!out.ok) {
+      const message = action === 'resetPassword' && /unknown action/i.test(out.error || '')
+        ? '비밀번호 변경 서버가 아직 업데이트되지 않았어요. 관리자에게 Apps Script 재배포를 요청해주세요.'
+        : (out.error || '요청에 실패했어요.');
+      throw new Error(message);
+    }
+    return out;
+  }
+
+  demoStore() {
+    let d = null;
+    try { d = JSON.parse(localStorage.getItem(DEMO_KEY)); } catch (e) {}
+    if (!d || !d.letters) {
+      const now = Date.now();
+      d = {
+        openDate: '2026-08-15',
+        adminPw: 'admin1234',
+        letters: [
+          { id: 'a1', sid: '20251234', title: '6개월 뒤의 나에게', body: '요즘은 매일이 조금씩 벅차. 그래도 아침에 창문 열 때 드는 바람이 좋아.\n\n그때의 나는 이 계절을 어떻게 기억하고 있을까.', pw: '1111', createdAt: now - 2 * DAY, updatedAt: now - 2 * DAY },
+          { id: 'a2', sid: '20259876', title: '', body: '시험 끝나고 바다 보러 가기로 한 약속, 지켰는지 궁금하다.', pw: '2222', createdAt: now - 5 * DAY, updatedAt: now - 5 * DAY },
+          { id: 'a3', sid: '20250412', title: '겨울의 나에게', body: '지금은 8월이고 너무 덥다. 네가 읽을 때쯤이면 춥겠지. 따뜻하게 입고 다녀.', pw: '3333', createdAt: now - 12 * DAY, updatedAt: now - 12 * DAY }
+        ]
+      };
+      localStorage.setItem(DEMO_KEY, JSON.stringify(d));
+    }
+    return d;
+  }
+  demoSave(d) { localStorage.setItem(DEMO_KEY, JSON.stringify(d)); return d; }
+  demoStatus(d, l) {
+    const now = Date.now(), open = new Date(d.openDate + 'T00:00:00').getTime();
+    if (now >= open) return 'open';
+    if (now <= l.createdAt + this.editDays() * DAY) return 'editable';
+    return 'locked';
+  }
+
+  demo(action, p) {
+    const d = this.demoStore(), ed = this.editDays();
+    const fail = m => { throw new Error(m); };
+    if (action === 'config') {
+      const users = new Set(d.letters.map(l => l.sid));
+      const t = new Date().toDateString();
+      return { ok: true, openDate: d.openDate, editDays: ed, now: Date.now(),
+        stats: { total: d.letters.length, users: users.size, today: d.letters.filter(l => new Date(l.createdAt).toDateString() === t).length } };
+    }
+    if (action === 'create') {
+      const now = Date.now();
+      const l = { id: 'c' + Math.random().toString(36).slice(2, 9), sid: p.sid.trim(), name: p.name.trim(), phone: p.phone.trim(), instagram: p.instagram.trim().replace(/^@/, ''), recoveryAnswer: p.recoveryAnswer.trim().toLowerCase(), title: (p.title || '').trim(), body: p.body, pw: p.pw, createdAt: now, updatedAt: now };
+      this.demoSave({ ...d, letters: [...d.letters, l] });
+      return { ok: true, id: l.id, createdAt: now, editUntil: now + ed * DAY };
+    }
+    if (action === 'find') {
+      const hits = d.letters.filter(l => l.sid === p.sid.trim() && l.pw === p.pw).sort((a, b) => b.createdAt - a.createdAt);
+      if (!hits.length) fail('학번이나 비밀번호가 맞지 않아요.');
+      const letters = hits.map(hit => { const st=this.demoStatus(d,hit); const base={ id:hit.id,sid:hit.sid,status:st,createdAt:hit.createdAt,editUntil:hit.createdAt+ed*DAY }; return st==='open'?{...base,title:hit.title,body:hit.body}:base; });
+      return { ok:true, openDate:d.openDate, letters };
+    }
+    if (action === 'resetPassword') {
+      const hits = d.letters.filter(l => l.sid === p.sid.trim() && l.recoveryAnswer && l.recoveryAnswer === p.recoveryAnswer.trim().toLowerCase());
+      if (!hits.length) fail('학번이나 답변이 맞지 않아요.');
+      this.demoSave({ ...d, letters: d.letters.map(l => hits.some(h => h.id === l.id) ? { ...l, pw: p.newPw } : l) });
+      return { ok: true, count: hits.length };
+    }
+    if (action === 'update') {
+      const l = d.letters.find(x => x.id === p.id && x.pw === p.pw);
+      if (!l) fail('편지를 찾을 수 없어요.');
+      if (this.demoStatus(d, l) !== 'editable') fail('수정 기간이 끝났어요.');
+      this.demoSave({ ...d, letters: d.letters.map(x => x.id === p.id ? { ...x, title: (p.title || '').trim(), body: p.body, updatedAt: Date.now() } : x) });
+      return { ok: true };
+    }
+    if (action === 'adminList') {
+      if (p.adminPw !== d.adminPw) fail('관리자 비밀번호가 맞지 않아요.');
+      return { ok: true, openDate: d.openDate, editDays: ed, now: Date.now(),
+        letters: d.letters.slice().sort((a, b) => b.createdAt - a.createdAt).map(l => ({ ...l, status: this.demoStatus(d, l) })) };
+    }
+    if (action === 'adminDelete') {
+      if (p.adminPw !== d.adminPw) fail('관리자 비밀번호가 맞지 않아요.');
+      this.demoSave({ ...d, letters: d.letters.filter(l => l.id !== p.id) });
+      return { ok: true };
+    }
+    if (action === 'setOpenDate') {
+      if (p.adminPw !== d.adminPw) fail('관리자 비밀번호가 맞지 않아요.');
+      this.demoSave({ ...d, openDate: p.openDate });
+      return { ok: true, openDate: p.openDate };
+    }
+    if (action === 'changeAdminPw') {
+      if (p.adminPw !== d.adminPw) fail('관리자 비밀번호가 맞지 않아요.');
+      if (String(p.newAdminPw || '').length < 8) fail('새 관리자 비밀번호는 8자 이상으로 정해주세요.');
+      if (p.newAdminPw === p.adminPw) fail('기존과 다른 비밀번호를 입력해주세요.');
+      this.demoSave({ ...d, adminPw: p.newAdminPw });
+      return { ok: true };
+    }
+    fail('알 수 없는 요청');
+  }
+
+  /* ---------- 헬퍼 ---------- */
+
+  editDays() { return this.props.editDays ?? 7; }
+  fmt(ts) { const d = new Date(ts); return d.getFullYear() + '. ' + (d.getMonth() + 1) + '. ' + d.getDate() + '.'; }
+  openTs() { const c = this.state.config; return c ? new Date(c.openDate + 'T00:00:00').getTime() : 0; }
+  daysLeft() { return Math.max(0, Math.ceil((this.openTs() - this.state.now) / DAY)); }
+
+  async loadConfig(api) {
+    try {
+      const c = await this.call('config', {}, api);
+      localStorage.setItem(CONFIG_CACHE_KEY, JSON.stringify(c));
+      this.setState({ config: c, openDateInput: c.openDate });
+    } catch (e) {
+      this.setState({ apiMsg: '연결 실패: ' + e.message });
+    }
+  }
+
+  async run(fn) {
+    this.setState({ loading: true, err: '' });
+    try { await fn(); } catch (e) { this.setState({ err: e.message }); }
+    this.setState({ loading: false });
+  }
+
+  async loadAdmin(pw) {
+    const r = await this.call('adminList', { adminPw: pw });
+    this.setState({ letters: r.letters, openDateInput: r.openDate, screen: 'admin', adminPw: pw, err: '' });
+  }
+
+  async saveStoryCard() {
+    if (document.fonts && document.fonts.ready) await document.fonts.ready;
+    const canvas = document.createElement('canvas');
+    canvas.width = 1080; canvas.height = 1920;
+    const x = canvas.getContext('2d');
+    const round = (a,b,w,h,r,fill,stroke) => { x.beginPath(); x.roundRect(a,b,w,h,r); x.fillStyle=fill; x.fill(); if(stroke){x.strokeStyle=stroke;x.lineWidth=8;x.stroke();} };
+    const center = (text,y,size,color,font='Jua') => { x.fillStyle=color;x.font=size+'px '+font;x.textAlign='center';x.textBaseline='middle';x.fillText(text,540,y); };
+    const grad=x.createLinearGradient(0,0,1080,1920);grad.addColorStop(0,'#FFF8F2');grad.addColorStop(.55,'#FBE8E2');grad.addColorStop(1,'#F6DDDC');x.fillStyle=grad;x.fillRect(0,0,1080,1920);
+    x.fillStyle='#D79A9A';x.beginPath();x.arc(125,350,18,0,Math.PI*2);x.fill();x.fillStyle='#C0752F';x.beginPath();x.arc(935,1450,15,0,Math.PI*2);x.fill();
+    center('✦',190,70,'#C0752F'); center('✦',360,48,'#C0752F');
+    round(245,120,590,86,45,'#9B2226');center('LETTER TO MY FUTURE SELF',164,31,'#FFFFFF','sans-serif');
+    round(290,430,500,345,28,'#FFF9F6','#7C1B1E');
+    x.beginPath();x.moveTo(300,450);x.lineTo(540,640);x.lineTo(780,450);x.strokeStyle='#7C1B1E';x.lineWidth=8;x.stroke();
+    x.fillStyle='#9B2226';x.beginPath();x.arc(540,650,65,0,Math.PI*2);x.fill();x.strokeStyle='#7C1B1E';x.lineWidth=8;x.stroke();
+    center('미래의 나에게',930,72,'#9B2226');center('편지를 보냈어요! 💌',1025,72,'#9B2226');
+    const today = this.daysLeft() === 0;
+    center(today ? '오늘은 바로 편지를 여는 날이에요!' : this.fmt(this.openTs()) + '에 다시 만나요',1190,42,'#7C6560','sans-serif');
+    center(today ? '캐릭터가 편지를 열어줄게요 🎉' : '우리의 약속까지 D-' + this.daysLeft(),1260,45,'#9B2226','sans-serif');
+    round(180,1385,720,190,34,'rgba(255,255,255,.76)','#D7A96F');center('✓ 편지 작성 완료 · 안전하게 봉인했어요',1455,34,'#7C6560','sans-serif');center('@' + this.state.instagram.trim().replace(/^@/, ''),1525,42,'#9B2226','sans-serif');
+    center('오늘의 마음을 미래로 보냈어요',1745,31,'#9C837D','sans-serif');
+    const link=document.createElement('a');link.download='미래의나에게_편지완료.png';link.href=canvas.toDataURL('image/png');link.click();
+    this.setState({ storySaved: true });
+  }
+
+  renderVals() {
+    const s = this.state, set = o => this.setState(o);
+    const cfg = s.config;
+    const dLeft = this.daysLeft();
+    const cur = s.cur;
+    const foundRows = s.foundLetters.map((l, i) => ({
+      label: l.title || '봉인된 편지 ' + (s.foundLetters.length - i), dateText: this.fmt(l.createdAt),
+      actionText: l.status === 'open' ? '열어보기 →' : '작성 완료 · 봉인됨', color: l.status === 'open' ? '#9B2226' : '#2F7D5B', cursor: l.status === 'open' ? 'pointer' : 'default',
+      open: () => { if (l.status === 'open') set({ screen:'letter', cur:l, letterRevealed:false }); }
+    }));
+    const q = s.q.trim();
+
+    const rows = s.letters.filter(l => !q || l.sid.indexOf(q) >= 0).map(l => ({
+      sid: l.sid, name: l.name || '', phone: l.phone || '', instagram: l.instagram || '', title: l.title || '(제목 없음)', dateText: this.fmt(l.createdAt),
+      stateText: l.status === 'open' ? '개봉됨' : '작성 완료',
+      stateColor: '#2F7D5B',
+      open: () => set({ adminReadId: l.id, cur: { ...l } }),
+      del: () => { if (!confirm(l.sid + ' 님의 편지를 삭제할까요?')) return;
+        const previous = s.letters;
+        set({ letters: previous.filter(x => x.id !== l.id), adminReadId: null, cur: null, err: '' });
+        this.call('adminDelete', { adminPw: s.adminPw, id: l.id }).catch(e => {
+          set({ letters: previous, err: '삭제하지 못했어요: ' + e.message });
+        }); }
+    }));
+
+    const adminStats = {
+      total: s.letters.length,
+      users: new Set(s.letters.map(l => l.sid)).size,
+      editable: s.letters.filter(l => l.status === 'editable').length,
+      days: dLeft, today: cfg ? cfg.stats.today : 0
+    };
+    const isAdmin = s.screen === 'admin';
+
+    return {
+      isHome: s.screen === 'home', isWrite: s.screen === 'write', isSending: s.screen === 'sending', isSent: s.screen === 'sent',
+      isFind: s.screen === 'find', isLetterList: s.screen === 'letterList', isLetter: s.screen === 'letter',
+      isAdminLogin: s.screen === 'adminLogin', isAdmin,
+      demoMode: !s.api, loading: s.loading, noticeOpen: s.noticeOpen,
+      sid: s.sid, name: s.name, phone: s.phone, instagram: s.instagram, instagramDisplay: '@' + s.instagram.trim().replace(/^@/, ''), recoveryAnswer: s.recoveryAnswer, newPw: s.newPw, recoveryOpen: s.recoveryOpen, recoveryMsg: s.recoveryMsg, privacyAgreed: s.privacyAgreed, pw: s.pw, pw2: s.pw2, title: s.title, body: s.body, err: s.err,
+      adminPw: s.adminPw, newAdminPw: s.newAdminPw, confirmAdminPw: s.confirmAdminPw,
+      adminMsg: s.adminMsg, pwChangeMsg: s.pwChangeMsg, q: s.q, openDateInput: s.openDateInput,
+      apiInput: s.apiInput, apiMsg: s.apiMsg,
+      bodyLen: s.body.length,
+      editDaysText: this.editDays() + '일',
+      openDateText: cfg ? this.fmt(this.openTs()) : '…',
+      dDayText: cfg ? (dLeft === 0 ? '오늘!' : 'D-' + dLeft) : '…',
+      isOpenToday: !!cfg && dLeft === 0,
+      isNotOpenToday: !cfg || dLeft !== 0,
+      stats: isAdmin ? adminStats : { total: cfg ? cfg.stats.total : 0, today: cfg ? cfg.stats.today : 0, days: dLeft, users: cfg ? cfg.stats.users : 0, editable: 0 },
+      submitLabel: s.loading ? '넣는 중…' : '우체통에 넣기',
+      findLabel: s.loading ? '찾는 중…' : '열어보기',
+      loginLabel: s.loading ? '확인 중…' : '들어가기',
+      storySaveLabel: s.storySaved ? '이미지 저장 완료 ✓' : '인스타용 카드 이미지 저장',
+      cur: cur ? {
+        title: cur.title || '(제목 없음)', body: cur.body || '', sid: cur.sid,
+        dateText: this.fmt(cur.createdAt), editUntilText: this.fmt(cur.editUntil || cur.createdAt + this.editDays() * DAY)
+      } : { title: '', body: '', sid: '', dateText: '', editUntilText: '' },
+      letterLocked: cur ? cur.status !== 'open' : false,
+      letterOpen: cur ? cur.status === 'open' : false,
+      reading: s.letterRevealed,
+      characterOpenClass: s.letterRevealed ? 'open' : '',
+      toggleText: s.letterRevealed ? '닫아주세요' : '열어주세요',
+      badgeText: cur && cur.status === 'open' ? '개봉됨' : '수정 가능',
+      badgeColor: cur && cur.status === 'open' ? '#2F7D5B' : '#C0752F',
+      rows, noRows: rows.length === 0, adminReading: !!s.adminReadId,
+      foundRows, foundCount: foundRows.length,
+
+      closeNotice: () => set({ noticeOpen: false }),
+      goHome: () => set({ screen: 'home', err: '', cur: null, letterRevealed: false, sid: '', name: '', phone: '', instagram: '', recoveryAnswer: '', newPw: '', recoveryOpen: false, recoveryMsg: '', privacyAgreed: false, pw: '', pw2: '', title: '', body: '' }),
+      goWrite: () => set({ screen: 'write', err: '', cur: null, title: '', body: '', sid: '', name: '', phone: '', instagram: '', recoveryAnswer: '', newPw: '', recoveryOpen: false, recoveryMsg: '', privacyAgreed: false, pw: '', pw2: '' }),
+      goFind: () => set({ screen: 'find', err: '', sid: '', pw: '', recoveryAnswer: '', newPw: '', recoveryOpen: false, recoveryMsg: '' }),
+      goAdmin: () => set({ screen: isAdmin ? 'admin' : 'adminLogin', err: '' }),
+      onSid: e => set({ sid: e.target.value }), onPw: e => set({ pw: e.target.value }),
+      onName: e => set({ name: e.target.value }),
+      onPhone: e => set({ phone: e.target.value }), onInstagram: e => set({ instagram: e.target.value }),
+      onRecoveryAnswer: e => set({ recoveryAnswer: e.target.value }), onNewPw: e => set({ newPw: e.target.value }),
+      onPrivacyAgreed: e => set({ privacyAgreed: e.target.checked }),
+      onPw2: e => set({ pw2: e.target.value }), onTitle: e => set({ title: e.target.value }),
+      onBody: e => set({ body: e.target.value }), onQ: e => set({ q: e.target.value }),
+      onAdminPw: e => set({ adminPw: e.target.value }),
+      onNewAdminPw: e => set({ newAdminPw: e.target.value, pwChangeMsg: '' }),
+      onConfirmAdminPw: e => set({ confirmAdminPw: e.target.value, pwChangeMsg: '' }),
+      onOpenDate: e => set({ openDateInput: e.target.value }),
+      onApiInput: e => set({ apiInput: e.target.value }),
+
+      saveApi: () => {
+        const url = s.apiInput.trim();
+        localStorage.setItem(API_KEY, url);
+        set({ api: url, apiMsg: url ? '연결했어요. 확인 중…' : '데모 모드로 돌아갔어요.', config: null });
+        this.loadConfig(url).then(() => this.setState(st => st.config ? { apiMsg: url ? '서버에 연결됐어요.' : '데모 모드' } : {}));
+      },
+      clearApi: () => {
+        localStorage.removeItem(API_KEY);
+        set({ api: DEFAULT_API_URL, apiInput: DEFAULT_API_URL, apiMsg: '기본 서버 주소로 복원했어요.', config: null });
+        this.loadConfig(DEFAULT_API_URL);
+      },
+
+      submit: () => this.run(async () => {
+        if (!s.name.trim()) throw new Error('이름을 입력해주세요.');
+        if (!s.phone.trim()) throw new Error('전화번호를 입력해주세요.');
+        if (!s.instagram.trim()) throw new Error('인스타 아이디를 입력해주세요.');
+        if (!s.recoveryAnswer.trim()) throw new Error('비밀번호 찾기 답변을 입력해주세요.');
+        if (s.body.trim().length < 20) throw new Error('편지 내용은 최소 20자 이상 작성해주세요.');
+        if (!s.privacyAgreed) throw new Error('개인정보 수집·이용에 동의해주세요.');
+        if (s.pw.length < 4) throw new Error('비밀번호는 4자 이상으로 정해주세요.');
+        if (s.pw !== s.pw2) throw new Error('비밀번호가 서로 달라요.');
+        const r = await this.call('create', { sid: s.sid, department: '미입력', name: s.name, phone: s.phone, instagram: s.instagram, recoveryAnswer: s.recoveryAnswer, title: s.title, body: s.body, pw: s.pw, privacyAgreed: true });
+        set({ screen: 'sending', pw2: '', body: '', title: '', cur: { id: r.id, sid: s.sid.trim(), status: 'editable', createdAt: r.createdAt, editUntil: r.editUntil } });
+        setTimeout(() => this.setState(st => st.screen === 'sending' ? { screen: 'sent' } : {}), 1350);
+        this.loadConfig();
+      }),
+      openMine: () => set({ screen: 'letter', letterRevealed: false, err: '' }),
+      doFind: () => this.run(async () => {
+        const r = await this.call('find', { sid: s.sid, pw: s.pw });
+        const found = r.letters || [r];
+        set({ screen: 'letterList', foundLetters: found, cur: found[0], letterRevealed: false });
+      }),
+      toggleRecovery: () => set({ recoveryOpen: !s.recoveryOpen, recoveryMsg: '', err: '' }),
+      resetPassword: () => this.run(async () => {
+        if (!s.sid.trim()) throw new Error('학번을 입력해주세요.');
+        if (!s.recoveryAnswer.trim()) throw new Error('비밀번호 찾기 답변을 입력해주세요.');
+        if (s.newPw.length < 4) throw new Error('새 비밀번호는 4자 이상으로 정해주세요.');
+        await this.call('resetPassword', { sid: s.sid, recoveryAnswer: s.recoveryAnswer, newPw: s.newPw });
+        set({ pw: s.newPw, newPw: '', recoveryAnswer: '', recoveryMsg: '비밀번호를 변경했어요. 위에서 바로 열어보세요.' });
+      }),
+      toggleLetter: () => set({ letterRevealed: !s.letterRevealed }),
+      backFromLetter: () => set({ screen: s.foundLetters.length ? 'letterList' : 'home', cur: null, letterRevealed: false }),
+      saveStoryCard: () => this.saveStoryCard(),
+      doAdminLogin: () => this.run(() => this.loadAdmin(s.adminPw)),
+      refresh: () => this.run(() => this.loadAdmin(s.adminPw)),
+      logout: () => set({ screen: 'home', adminReadId: null, adminPw: '', newAdminPw: '', confirmAdminPw: '', pwChangeMsg: '', letters: [], cur: null }),
+      closeAdminRead: () => set({ adminReadId: null, cur: null }),
+      changeAdminPw: async () => {
+        set({ loading: true, pwChangeMsg: '' });
+        try {
+          if (s.newAdminPw.length < 8) throw new Error('새 관리자 비밀번호는 8자 이상으로 정해주세요.');
+          if (s.newAdminPw !== s.confirmAdminPw) throw new Error('새 비밀번호가 서로 달라요.');
+          await this.call('changeAdminPw', { adminPw: s.adminPw, newAdminPw: s.newAdminPw });
+          set({ adminPw: s.newAdminPw, newAdminPw: '', confirmAdminPw: '', pwChangeMsg: '관리자 비밀번호를 변경했어요.' });
+        } catch (e) {
+          set({ pwChangeMsg: e.message });
+        }
+        set({ loading: false });
+      },
+      saveOpenDate: async () => {
+        set({ loading: true, adminMsg: '' });
+        try {
+          if (!s.openDateInput) throw new Error('개봉일을 선택해주세요.');
+          await this.call('setOpenDate', { adminPw: s.adminPw, openDate: s.openDateInput });
+          set({ adminMsg: '개봉일을 바꿨어요.' });
+          await this.loadAdmin(s.adminPw);
+          this.loadConfig();
+        } catch (e) { set({ adminMsg: '변경 실패: ' + e.message }); }
+        set({ loading: false });
+      },
+      exportCsv: () => {
+        const esc = v => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
+        const csv = '\uFEFF' + ['이름,전화번호,학번,인스타아이디,제목,작성일,수정일,내용'].concat(
+          s.letters.map(l => [l.name, l.phone, l.sid, l.instagram, l.title, this.fmt(l.createdAt), this.fmt(l.updatedAt), l.body].map(esc).join(','))
+        ).join('\n');
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+        a.download = 'timecapsule.csv'; a.click();
+      }
+    };
+  }
+}
+
+</script>
+</body>
+</html>
