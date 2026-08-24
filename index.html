@@ -621,9 +621,11 @@ class Component extends DCLogic {
     x.fillStyle='#D79A9A';x.beginPath();x.arc(125,350,18,0,Math.PI*2);x.fill();x.fillStyle='#C0752F';x.beginPath();x.arc(935,1450,15,0,Math.PI*2);x.fill();
     center('✦',190,70,'#C0752F'); center('✦',360,48,'#C0752F');
     round(245,120,590,86,45,'#9B2226');center('LETTER TO MY FUTURE SELF',164,31,'#FFFFFF','sans-serif');
-    round(290,430,500,345,28,'#FFF9F6','#7C1B1E');
-    x.beginPath();x.moveTo(300,450);x.lineTo(540,640);x.lineTo(780,450);x.strokeStyle='#7C1B1E';x.lineWidth=8;x.stroke();
-    x.fillStyle='#9B2226';x.beginPath();x.arc(540,650,65,0,Math.PI*2);x.fill();x.strokeStyle='#7C1B1E';x.lineWidth=8;x.stroke();
+    const mascot = new Image();
+    const mascotReady = new Promise((resolve, reject) => { mascot.onload = resolve; mascot.onerror = reject; });
+    mascot.src = './character-original-closed-transparent.png';
+    await mascotReady;
+    x.drawImage(mascot,290,280,500,500);
     center('미래의 나에게',930,72,'#9B2226');center('편지를 보냈어요! 💌',1025,72,'#9B2226');
     const today = this.daysLeft() === 0;
     center(today ? '오늘은 바로 편지를 여는 날이에요!' : this.fmt(this.openTs()) + '에 다시 만나요',1190,42,'#7C6560','sans-serif');
