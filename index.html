@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="preload" href="./character-closed-transparent.png" as="image">
-<link rel="preload" href="./character-opening-transparent.png" as="image">
+<link rel="preload" href="./character-original-closed-transparent.png" as="image">
+<link rel="preload" href="./character-original-open-transparent.png" as="image">
 <script src="./support.js"></script>
 </head>
 <body>
@@ -312,8 +312,8 @@ input:focus,textarea:focus{outline:none;border-color:#9B2226}
   <sc-if value="{{ letterOpen }}" hint-placeholder-val="{{ false }}">
   <div style="background:#fff;border:2px solid #3B2B27;border-radius:20px;box-shadow:5px 6px 0 rgba(59,43,39,.13);padding:26px 24px 26px">
     <div class="opening-scene {{ characterOpenClass }}" onClick="{{ toggleLetter }}" role="button" tabindex="0" aria-label="캐릭터가 편지 봉투 열고 닫기">
-      <img class="opening-character closed" src="./character-closed-transparent.png" alt="닫힌 편지 봉투를 들고 있는 캐릭터" loading="eager" decoding="sync" />
-      <img class="opening-character opened" src="./character-opening-transparent.png" alt="봉투를 열고 편지를 꺼내는 캐릭터" loading="eager" decoding="sync" />
+      <img class="opening-character closed" src="./character-original-closed-transparent.png" alt="한 손을 봉투 덮개에 올린 캐릭터" loading="eager" decoding="sync" />
+      <img class="opening-character opened" src="./character-original-open-transparent.png" alt="팔로 봉투 덮개를 들어 올리는 캐릭터" loading="eager" decoding="sync" />
     </div>
     <div style="font-family:Jua;font-size:16px;color:#9B2226;text-align:center;margin-bottom:18px">봉투를 눌러 편지를 {{ toggleText }}</div>
     <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap">
