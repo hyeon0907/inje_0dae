@@ -136,8 +136,8 @@ input:focus,textarea:focus{outline:none;border-color:#9B2226}
     <div style="font-size:14px;color:#9C837D;margin-top:5px">천천히, 하고 싶은 말을 적어보세요</div>
 
     <div style="margin-top:20px;display:flex;flex-direction:column;gap:7px">
-      <div style="font-size:13.5px;color:#7C6560">학번 <span style="color:#C0AAA3">(선택)</span></div>
-      <input value="{{ sid }}" onChange="{{ onSid }}" inputmode="numeric" placeholder="학번을 입력해주세요" style="padding:13px 14px;background:#FFFAF8;border:2px solid #E6D2CD;border-radius:12px;font-size:15px" />
+      <div style="font-size:13.5px;color:#7C6560">학번 <span style="color:#9B2226">(필수)</span></div>
+      <input value="{{ sid }}" onChange="{{ onSid }}" inputmode="numeric" required aria-required="true" placeholder="학번을 입력해주세요" style="padding:13px 14px;background:#FFFAF8;border:2px solid #E6D2CD;border-radius:12px;font-size:15px" />
     </div>
 
     <div class="identity-grid">
@@ -223,10 +223,8 @@ input:focus,textarea:focus{outline:none;border-color:#9B2226}
   <div class="story-card" style="text-align:center">
     <div class="story-dot one"></div><div class="story-dot two"></div>
     <div style="display:inline-block;background:#9B2226;color:#fff;border-radius:999px;padding:6px 14px;font-size:12.5px;letter-spacing:.04em">LETTER TO MY FUTURE SELF</div>
-    <div style="width:150px;height:104px;margin:0 auto;position:relative;animation:floaty 4s ease-in-out infinite">
-      <div style="position:absolute;inset:0;background:#F6DDDC;border:3px solid #7C1B1E;border-radius:9px"></div>
-      <div style="position:absolute;left:0;right:0;top:0;height:70px;overflow:hidden"><div style="position:absolute;left:11px;top:-52px;width:124px;height:124px;background:#fff;border:3px solid #7C1B1E;transform:rotate(45deg);border-radius:6px"></div></div>
-      <div style="position:absolute;left:50%;top:44px;margin-left:-19px;width:38px;height:38px;border-radius:50%;background:#9B2226;border:3px solid #7C1B1E"></div>
+    <div style="width:168px;height:168px;margin:4px auto 0;position:relative;animation:floaty 4s ease-in-out infinite">
+      <img src="./character-original-closed-transparent.png" alt="완성된 편지를 두 팔로 들고 있는 캐릭터" loading="eager" decoding="sync" style="display:block;width:100%;height:100%;object-fit:contain" />
     </div>
     <div style="font-family:Jua;font-size:27px;color:#9B2226;margin:22px 0 8px">미래의 나에게<br>편지를 보냈어요! 💌</div>
     <sc-if value="{{ isOpenToday }}" hint-placeholder-val="{{ false }}">
@@ -727,6 +725,7 @@ class Component extends DCLogic {
       },
 
       submit: () => this.run(async () => {
+        if (!s.sid.trim()) throw new Error('학번을 입력해주세요.');
         if (!s.name.trim()) throw new Error('이름을 입력해주세요.');
         if (!s.phone.trim()) throw new Error('전화번호를 입력해주세요.');
         if (!s.instagram.trim()) throw new Error('인스타 아이디를 입력해주세요.');
