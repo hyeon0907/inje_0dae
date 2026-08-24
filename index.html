@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preload" href="./character-original-closed-transparent.png" as="image">
 <link rel="preload" href="./character-original-open-transparent.png" as="image">
+<script src="./html2canvas.min.js"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -226,7 +227,7 @@ input:focus,textarea:focus{outline:none;border-color:#9B2226}
 
 <sc-if value="{{ isSent }}" hint-placeholder-val="{{ false }}">
 <div style="max-width:520px;margin:0 auto;padding-top:26px;animation:pop .4s ease both">
-  <div class="story-card" style="text-align:center">
+  <div id="sent-story-card" class="story-card" style="text-align:center">
     <div class="story-dot one"></div><div class="story-dot two"></div>
     <div style="display:inline-block;background:#9B2226;color:#fff;border-radius:999px;padding:6px 14px;font-size:12.5px;letter-spacing:.04em">LETTER TO MY FUTURE SELF</div>
     <div style="width:168px;height:168px;margin:4px auto 0;position:relative;animation:floaty 4s ease-in-out infinite">
@@ -243,8 +244,8 @@ input:focus,textarea:focus{outline:none;border-color:#9B2226}
       ✓ 편지 작성 완료 · 안전하게 봉인했어요<br><b style="color:#9B2226">{{ instagramDisplay }}</b>
     </div>
     <div style="margin-top:12px;font-size:12.5px;color:#9C837D">이 카드를 캡처해서 인스타그램 스토리에 올려주세요 ✨</div>
-    <div onClick="{{ saveStoryCard }}" style="margin-top:22px;padding:15px;background:#9B2226;color:#fff;border:2px solid #7C1B1E;border-radius:14px;font-family:Jua;font-size:17px;cursor:pointer;box-shadow:0 3px 0 #7C1B1E">{{ storySaveLabel }}</div>
-    <div onClick="{{ goHome }}" style="margin-top:11px;padding:13px;background:rgba(255,255,255,.7);color:#9B2226;border:2px solid #E0C4C0;border-radius:14px;font-family:Jua;font-size:15px;cursor:pointer">홈으로</div>
+    <div data-capture-hide onClick="{{ saveStoryCard }}" style="margin-top:22px;padding:15px;background:#9B2226;color:#fff;border:2px solid #7C1B1E;border-radius:14px;font-family:Jua;font-size:17px;cursor:pointer;box-shadow:0 3px 0 #7C1B1E">{{ storySaveLabel }}</div>
+    <div data-capture-hide onClick="{{ goHome }}" style="margin-top:11px;padding:13px;background:rgba(255,255,255,.7);color:#9B2226;border:2px solid #E0C4C0;border-radius:14px;font-family:Jua;font-size:15px;cursor:pointer">홈으로</div>
   </div>
 </div>
 </sc-if>
@@ -612,26 +613,23 @@ class Component extends DCLogic {
 
   async saveStoryCard() {
     if (document.fonts && document.fonts.ready) await document.fonts.ready;
+    const card = document.getElementById('sent-story-card');
+    if (!card || !window.html2canvas) throw new Error('저장 이미지를 준비하지 못했어요. 잠시 후 다시 시도해주세요.');
+    const shot = await window.html2canvas(card, {
+      backgroundColor: null,
+      scale: 2,
+      useCORS: true,
+      logging: false,
+      onclone: doc => doc.querySelectorAll('[data-capture-hide]').forEach(el => { el.style.display = 'none'; })
+    });
     const canvas = document.createElement('canvas');
     canvas.width = 1080; canvas.height = 1920;
     const x = canvas.getContext('2d');
-    const round = (a,b,w,h,r,fill,stroke) => { x.beginPath(); x.roundRect(a,b,w,h,r); x.fillStyle=fill; x.fill(); if(stroke){x.strokeStyle=stroke;x.lineWidth=8;x.stroke();} };
-    const center = (text,y,size,color,font='Jua') => { x.fillStyle=color;x.font=size+'px '+font;x.textAlign='center';x.textBaseline='middle';x.fillText(text,540,y); };
     const grad=x.createLinearGradient(0,0,1080,1920);grad.addColorStop(0,'#FFF8F2');grad.addColorStop(.55,'#FBE8E2');grad.addColorStop(1,'#F6DDDC');x.fillStyle=grad;x.fillRect(0,0,1080,1920);
-    x.fillStyle='#D79A9A';x.beginPath();x.arc(125,350,18,0,Math.PI*2);x.fill();x.fillStyle='#C0752F';x.beginPath();x.arc(935,1450,15,0,Math.PI*2);x.fill();
-    center('✦',190,70,'#C0752F'); center('✦',360,48,'#C0752F');
-    round(245,120,590,86,45,'#9B2226');center('LETTER TO MY FUTURE SELF',164,31,'#FFFFFF','sans-serif');
-    const mascot = new Image();
-    const mascotReady = new Promise((resolve, reject) => { mascot.onload = resolve; mascot.onerror = reject; });
-    mascot.src = './character-original-closed-transparent.png';
-    await mascotReady;
-    x.drawImage(mascot,290,280,500,500);
-    center('미래의 나에게',930,72,'#9B2226');center('편지를 보냈어요! 💌',1025,72,'#9B2226');
-    const today = this.daysLeft() === 0;
-    center(today ? '오늘은 바로 편지를 여는 날이에요!' : this.fmt(this.openTs()) + '에 다시 만나요',1190,42,'#7C6560','sans-serif');
-    center(today ? '캐릭터가 편지를 열어줄게요 🎉' : '우리의 약속까지 D-' + this.daysLeft(),1260,45,'#9B2226','sans-serif');
-    round(180,1385,720,190,34,'rgba(255,255,255,.76)','#D7A96F');center('✓ 편지 작성 완료 · 안전하게 봉인했어요',1455,34,'#7C6560','sans-serif');center('@' + this.state.instagram.trim().replace(/^@/, ''),1525,42,'#9B2226','sans-serif');
-    center('오늘의 마음을 미래로 보냈어요',1745,31,'#9C837D','sans-serif');
+    const maxW = 1000, maxH = 1800;
+    const scale = Math.min(maxW / shot.width, maxH / shot.height);
+    const width = Math.round(shot.width * scale), height = Math.round(shot.height * scale);
+    x.drawImage(shot, Math.round((1080 - width) / 2), Math.round((1920 - height) / 2), width, height);
     const link=document.createElement('a');link.download='미래의나에게_편지완료.png';link.href=canvas.toDataURL('image/png');link.click();
     this.setState({ storySaved: true });
   }
