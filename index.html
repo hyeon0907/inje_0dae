@@ -135,9 +135,15 @@ input:focus,textarea:focus{outline:none;border-color:#9B2226}
     <div style="font-family:Jua;font-size:22px;color:#9B2226">편지 쓰기</div>
     <div style="font-size:14px;color:#9C837D;margin-top:5px">천천히, 하고 싶은 말을 적어보세요</div>
 
-    <div style="margin-top:20px;display:flex;flex-direction:column;gap:7px">
-      <div style="font-size:13.5px;color:#7C6560">학번 <span style="color:#9B2226">(필수)</span></div>
-      <input value="{{ sid }}" onChange="{{ onSid }}" inputmode="numeric" required aria-required="true" placeholder="학번을 입력해주세요" style="padding:13px 14px;background:#FFFAF8;border:2px solid #E6D2CD;border-radius:12px;font-size:15px" />
+    <div class="identity-grid" style="margin-top:20px">
+      <div style="display:flex;flex-direction:column;gap:7px">
+        <div style="font-size:13.5px;color:#7C6560">학번 <span style="color:#9B2226">(필수)</span></div>
+        <input value="{{ sid }}" onChange="{{ onSid }}" inputmode="numeric" required aria-required="true" placeholder="학번을 입력해주세요" style="padding:13px 14px;background:#FFFAF8;border:2px solid #E6D2CD;border-radius:12px;font-size:15px" />
+      </div>
+      <div style="display:flex;flex-direction:column;gap:7px">
+        <div style="font-size:13.5px;color:#7C6560">학과 <span style="color:#9B2226">(필수)</span></div>
+        <input value="{{ department }}" onChange="{{ onDepartment }}" required aria-required="true" placeholder="학과를 입력해주세요" style="padding:13px 14px;background:#FFFAF8;border:2px solid #E6D2CD;border-radius:12px;font-size:15px" />
+      </div>
     </div>
 
     <div class="identity-grid">
@@ -172,7 +178,7 @@ input:focus,textarea:focus{outline:none;border-color:#9B2226}
 
     <label style="display:flex;align-items:flex-start;gap:9px;margin-top:18px;padding:13px 14px;background:#FFF9F6;border:2px solid #EBD7D2;border-radius:12px;cursor:pointer">
       <input type="checkbox" checked="{{ privacyAgreed }}" onChange="{{ onPrivacyAgreed }}" style="width:18px;height:18px;margin-top:1px;accent-color:#9B2226" />
-      <span style="font-size:13.5px;line-height:1.65;color:#7C6560"><b style="color:#9B2226">개인정보 수집·이용에 동의합니다.</b><br>이름, 전화번호, 학번, 인스타 아이디는 타임캡슐 편지 관리 및 이벤트 응모 확인 목적으로만 사용됩니다.</span>
+      <span style="font-size:13.5px;line-height:1.65;color:#7C6560"><b style="color:#9B2226">개인정보 수집·이용에 동의합니다.</b><br>이름, 전화번호, 학번, 학과, 인스타 아이디는 타임캡슐 편지 관리 및 이벤트 응모 확인 목적으로만 사용됩니다.</span>
     </label>
 
     <div style="margin-top:20px;padding-top:20px;border-top:2px dashed #EBD7D2">
@@ -396,18 +402,19 @@ input:focus,textarea:focus{outline:none;border-color:#9B2226}
   <div style="background:#fff;border:2px solid #EBD7D2;border-radius:16px;margin-top:12px;overflow:hidden">
     <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:2px solid #F3E6E2;flex-wrap:wrap;gap:10px">
       <div style="font-family:Jua;font-size:17px;color:#3B2B27">사용자 목록</div>
-      <input value="{{ q }}" onChange="{{ onQ }}" placeholder="학번 검색" style="padding:9px 13px;background:#FFFAF8;border:2px solid #E6D2CD;border-radius:11px;font-size:14px;width:180px" />
+      <input value="{{ q }}" onChange="{{ onQ }}" placeholder="학번·학과 검색" style="padding:9px 13px;background:#FFFAF8;border:2px solid #E6D2CD;border-radius:11px;font-size:14px;width:180px" />
     </div>
     <div style="overflow-x:auto">
-    <div style="min-width:1060px">
-    <div style="display:grid;grid-template-columns:0.9fr 1.15fr 0.8fr 1.1fr 1.6fr 0.9fr 0.8fr 0.7fr;gap:12px;padding:12px 20px;background:#FDF6F3;font-size:12.5px;color:#9C837D;border-bottom:2px solid #F3E6E2;white-space:nowrap">
-      <div>이름</div><div>전화번호</div><div>학번</div><div>인스타 아이디</div><div>제목</div><div>작성일</div><div>상태</div><div style="text-align:right">관리</div>
+    <div style="min-width:1160px">
+    <div style="display:grid;grid-template-columns:0.85fr 1.1fr 0.75fr 1fr 1.05fr 1.45fr 0.85fr 0.75fr 0.65fr;gap:12px;padding:12px 20px;background:#FDF6F3;font-size:12.5px;color:#9C837D;border-bottom:2px solid #F3E6E2;white-space:nowrap">
+      <div>이름</div><div>전화번호</div><div>학번</div><div>학과</div><div>인스타 아이디</div><div>제목</div><div>작성일</div><div>상태</div><div style="text-align:right">관리</div>
     </div>
     <sc-for list="{{ rows }}" as="row" hint-placeholder-count="4">
-      <div style="display:grid;grid-template-columns:0.9fr 1.15fr 0.8fr 1.1fr 1.6fr 0.9fr 0.8fr 0.7fr;gap:12px;padding:12px 20px;border-bottom:1px solid #F6ECE9;font-size:13.5px;align-items:center">
+      <div style="display:grid;grid-template-columns:0.85fr 1.1fr 0.75fr 1fr 1.05fr 1.45fr 0.85fr 0.75fr 0.65fr;gap:12px;padding:12px 20px;border-bottom:1px solid #F6ECE9;font-size:13.5px;align-items:center">
         <div style="color:#3B2B27;white-space:nowrap">{{ row.name }}</div>
         <div style="color:#3B2B27;white-space:nowrap">{{ row.phone }}</div>
         <div style="color:#3B2B27;white-space:nowrap">{{ row.sid }}</div>
+        <div style="color:#3B2B27;white-space:nowrap">{{ row.department }}</div>
         <div style="color:#3B2B27;white-space:nowrap">@{{ row.instagram }}</div>
         <div onClick="{{ row.open }}" style="color:#9B2226;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ row.title }}</div>
         <div style="color:#9C837D;white-space:nowrap">{{ row.dateText }}</div>
@@ -428,7 +435,7 @@ input:focus,textarea:focus{outline:none;border-color:#9B2226}
       <div style="font-family:Jua;font-size:19px;color:#9B2226">{{ cur.title }}</div>
       <div onClick="{{ closeAdminRead }}" style="font-size:14px;color:#B39A93;cursor:pointer">닫기</div>
     </div>
-    <div style="font-size:13px;color:#B39A93;margin-top:4px">{{ cur.sid }} · {{ cur.dateText }}</div>
+    <div style="font-size:13px;color:#B39A93;margin-top:4px">{{ cur.sid }} · {{ cur.department }} · {{ cur.dateText }}</div>
     <div style="margin-top:14px;padding:20px;background:#FFFAF8;border:2px dashed #EBD7D2;border-radius:14px;font-family:'Gowun Batang',serif;font-size:15px;line-height:2.1;white-space:nowrap;overflow-x:auto">{{ cur.body }}</div>
   </div>
   </sc-if>
@@ -456,7 +463,7 @@ const DAY = 86400000;
 
 class Component extends DCLogic {
   state = {
-    screen: 'home', sid: '', name: '', phone: '', instagram: '', recoveryAnswer: '', newPw: '', recoveryOpen: false, recoveryMsg: '', pw: '', pw2: '', title: '', body: '', privacyAgreed: false,
+    screen: 'home', sid: '', department: '', name: '', phone: '', instagram: '', recoveryAnswer: '', newPw: '', recoveryOpen: false, recoveryMsg: '', pw: '', pw2: '', title: '', body: '', privacyAgreed: false,
     err: '', adminPw: '', newAdminPw: '', confirmAdminPw: '', adminMsg: '', pwChangeMsg: '', q: '', openDateInput: '',
     api: '', apiInput: '', apiMsg: '', loading: false,
     config: null, cur: null, letters: [], foundLetters: [], adminReadId: null,
@@ -527,7 +534,7 @@ class Component extends DCLogic {
     }
     if (action === 'create') {
       const now = Date.now();
-      const l = { id: 'c' + Math.random().toString(36).slice(2, 9), sid: p.sid.trim(), name: p.name.trim(), phone: p.phone.trim(), instagram: p.instagram.trim().replace(/^@/, ''), recoveryAnswer: p.recoveryAnswer.trim().toLowerCase(), title: (p.title || '').trim(), body: p.body, pw: p.pw, createdAt: now, updatedAt: now };
+      const l = { id: 'c' + Math.random().toString(36).slice(2, 9), sid: p.sid.trim(), department: p.department.trim(), name: p.name.trim(), phone: p.phone.trim(), instagram: p.instagram.trim().replace(/^@/, ''), recoveryAnswer: p.recoveryAnswer.trim().toLowerCase(), title: (p.title || '').trim(), body: p.body, pw: p.pw, createdAt: now, updatedAt: now };
       this.demoSave({ ...d, letters: [...d.letters, l] });
       return { ok: true, id: l.id, createdAt: now, editUntil: now + ed * DAY };
     }
@@ -639,8 +646,8 @@ class Component extends DCLogic {
     }));
     const q = s.q.trim();
 
-    const rows = s.letters.filter(l => !q || l.sid.indexOf(q) >= 0).map(l => ({
-      sid: l.sid, name: l.name || '', phone: l.phone || '', instagram: l.instagram || '', title: l.title || '(제목 없음)', dateText: this.fmt(l.createdAt),
+    const rows = s.letters.filter(l => !q || l.sid.indexOf(q) >= 0 || (l.department || '').indexOf(q) >= 0).map(l => ({
+      sid: l.sid, department: l.department || '-', name: l.name || '', phone: l.phone || '', instagram: l.instagram || '', title: l.title || '(제목 없음)', dateText: this.fmt(l.createdAt),
       stateText: l.status === 'open' ? '개봉됨' : '작성 완료',
       stateColor: '#2F7D5B',
       open: () => set({ adminReadId: l.id, cur: { ...l } }),
@@ -665,7 +672,7 @@ class Component extends DCLogic {
       isFind: s.screen === 'find', isLetterList: s.screen === 'letterList', isLetter: s.screen === 'letter',
       isAdminLogin: s.screen === 'adminLogin', isAdmin,
       demoMode: !s.api, loading: s.loading, noticeOpen: s.noticeOpen,
-      sid: s.sid, name: s.name, phone: s.phone, instagram: s.instagram, instagramDisplay: '@' + s.instagram.trim().replace(/^@/, ''), recoveryAnswer: s.recoveryAnswer, newPw: s.newPw, recoveryOpen: s.recoveryOpen, recoveryMsg: s.recoveryMsg, privacyAgreed: s.privacyAgreed, pw: s.pw, pw2: s.pw2, title: s.title, body: s.body, err: s.err,
+      sid: s.sid, department: s.department, name: s.name, phone: s.phone, instagram: s.instagram, instagramDisplay: '@' + s.instagram.trim().replace(/^@/, ''), recoveryAnswer: s.recoveryAnswer, newPw: s.newPw, recoveryOpen: s.recoveryOpen, recoveryMsg: s.recoveryMsg, privacyAgreed: s.privacyAgreed, pw: s.pw, pw2: s.pw2, title: s.title, body: s.body, err: s.err,
       adminPw: s.adminPw, newAdminPw: s.newAdminPw, confirmAdminPw: s.confirmAdminPw,
       adminMsg: s.adminMsg, pwChangeMsg: s.pwChangeMsg, q: s.q, openDateInput: s.openDateInput,
       apiInput: s.apiInput, apiMsg: s.apiMsg,
@@ -681,9 +688,9 @@ class Component extends DCLogic {
       loginLabel: s.loading ? '확인 중…' : '들어가기',
       storySaveLabel: s.storySaved ? '이미지 저장 완료 ✓' : '인스타용 카드 이미지 저장',
       cur: cur ? {
-        title: cur.title || '(제목 없음)', body: cur.body || '', sid: cur.sid,
+        title: cur.title || '(제목 없음)', body: cur.body || '', sid: cur.sid, department: cur.department || '-',
         dateText: this.fmt(cur.createdAt), editUntilText: this.fmt(cur.editUntil || cur.createdAt + this.editDays() * DAY)
-      } : { title: '', body: '', sid: '', dateText: '', editUntilText: '' },
+      } : { title: '', body: '', sid: '', department: '', dateText: '', editUntilText: '' },
       letterLocked: cur ? cur.status !== 'open' : false,
       letterOpen: cur ? cur.status === 'open' : false,
       reading: s.letterRevealed,
@@ -695,11 +702,11 @@ class Component extends DCLogic {
       foundRows, foundCount: foundRows.length,
 
       closeNotice: () => set({ noticeOpen: false }),
-      goHome: () => set({ screen: 'home', err: '', cur: null, letterRevealed: false, sid: '', name: '', phone: '', instagram: '', recoveryAnswer: '', newPw: '', recoveryOpen: false, recoveryMsg: '', privacyAgreed: false, pw: '', pw2: '', title: '', body: '' }),
-      goWrite: () => set({ screen: 'write', err: '', cur: null, title: '', body: '', sid: '', name: '', phone: '', instagram: '', recoveryAnswer: '', newPw: '', recoveryOpen: false, recoveryMsg: '', privacyAgreed: false, pw: '', pw2: '' }),
+      goHome: () => set({ screen: 'home', err: '', cur: null, letterRevealed: false, sid: '', department: '', name: '', phone: '', instagram: '', recoveryAnswer: '', newPw: '', recoveryOpen: false, recoveryMsg: '', privacyAgreed: false, pw: '', pw2: '', title: '', body: '' }),
+      goWrite: () => set({ screen: 'write', err: '', cur: null, title: '', body: '', sid: '', department: '', name: '', phone: '', instagram: '', recoveryAnswer: '', newPw: '', recoveryOpen: false, recoveryMsg: '', privacyAgreed: false, pw: '', pw2: '' }),
       goFind: () => set({ screen: 'find', err: '', sid: '', pw: '', recoveryAnswer: '', newPw: '', recoveryOpen: false, recoveryMsg: '' }),
       goAdmin: () => set({ screen: isAdmin ? 'admin' : 'adminLogin', err: '' }),
-      onSid: e => set({ sid: e.target.value }), onPw: e => set({ pw: e.target.value }),
+      onSid: e => set({ sid: e.target.value }), onDepartment: e => set({ department: e.target.value }), onPw: e => set({ pw: e.target.value }),
       onName: e => set({ name: e.target.value }),
       onPhone: e => set({ phone: e.target.value }), onInstagram: e => set({ instagram: e.target.value }),
       onRecoveryAnswer: e => set({ recoveryAnswer: e.target.value }), onNewPw: e => set({ newPw: e.target.value }),
@@ -726,6 +733,7 @@ class Component extends DCLogic {
 
       submit: () => this.run(async () => {
         if (!s.sid.trim()) throw new Error('학번을 입력해주세요.');
+        if (!s.department.trim()) throw new Error('학과를 입력해주세요.');
         if (!s.name.trim()) throw new Error('이름을 입력해주세요.');
         if (!s.phone.trim()) throw new Error('전화번호를 입력해주세요.');
         if (!s.instagram.trim()) throw new Error('인스타 아이디를 입력해주세요.');
@@ -734,7 +742,7 @@ class Component extends DCLogic {
         if (!s.privacyAgreed) throw new Error('개인정보 수집·이용에 동의해주세요.');
         if (s.pw.length < 4) throw new Error('비밀번호는 4자 이상으로 정해주세요.');
         if (s.pw !== s.pw2) throw new Error('비밀번호가 서로 달라요.');
-        const r = await this.call('create', { sid: s.sid, department: '미입력', name: s.name, phone: s.phone, instagram: s.instagram, recoveryAnswer: s.recoveryAnswer, title: s.title, body: s.body, pw: s.pw, privacyAgreed: true });
+        const r = await this.call('create', { sid: s.sid, department: s.department, name: s.name, phone: s.phone, instagram: s.instagram, recoveryAnswer: s.recoveryAnswer, title: s.title, body: s.body, pw: s.pw, privacyAgreed: true });
         set({ screen: 'sending', pw2: '', body: '', title: '', cur: { id: r.id, sid: s.sid.trim(), status: 'editable', createdAt: r.createdAt, editUntil: r.editUntil } });
         setTimeout(() => this.setState(st => st.screen === 'sending' ? { screen: 'sent' } : {}), 1350);
         this.loadConfig();
@@ -785,8 +793,8 @@ class Component extends DCLogic {
       },
       exportCsv: () => {
         const esc = v => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
-        const csv = '\uFEFF' + ['이름,전화번호,학번,인스타아이디,제목,작성일,수정일,내용'].concat(
-          s.letters.map(l => [l.name, l.phone, l.sid, l.instagram, l.title, this.fmt(l.createdAt), this.fmt(l.updatedAt), l.body].map(esc).join(','))
+        const csv = '\uFEFF' + ['이름,전화번호,학번,학과,인스타아이디,제목,작성일,수정일,내용'].concat(
+          s.letters.map(l => [l.name, l.phone, l.sid, l.department, l.instagram, l.title, this.fmt(l.createdAt), this.fmt(l.updatedAt), l.body].map(esc).join(','))
         ).join('\n');
         const a = document.createElement('a');
         a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
